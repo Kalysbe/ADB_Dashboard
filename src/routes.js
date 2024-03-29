@@ -47,6 +47,7 @@ import SignUp from "layouts/authentication/sign-up";
 
 import Home from "layouts/main/Home";
 import Blog from "layouts/main/Blog";
+import Contacts from "layouts/main/Contacts"
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -124,12 +125,20 @@ const routes = [
     component: <Home />,
   },
   {
-    
+    type: "collapse",
     name: "Blog",
     key: "main",
     route: "/blog",
     component: <Blog />,
   },
+  {
+   
+    type: "collapse",
+    name: "Contacts",
+    key: "contacts",
+    route: "/contacts",
+    component: <Contacts />,
+  }
 ];
 
 export default routes;

@@ -201,16 +201,16 @@ function DefaultNavbar({ transparent, light, action }) {
                                             <a>Расчет налога</a>
                                             <ul className="sub-menu">
                                               <li id="menu-item-102" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-102">
-                                                <Link to="taxhome">Жилое здание, сооружение и помещение</Link>
+                                                <Link to="/taxhome">Жилое здание, сооружение и помещение</Link>
                                               </li>
                                               <li id="menu-item-102" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-102">
-                                                <Link to="taxnohome">Нежилое здание, сооружение и помещение</Link>
+                                                <Link to="/taxnohome">Нежилое здание, сооружение и помещение</Link>
                                               </li>
                                               <li id="menu-item-102" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-102">
-                                                <Link to="taxplace">Земли насел. пунктов и несельхоз назнач.</Link>
+                                                <Link to="/taxplace">Земли насел. пунктов и несельхоз назнач.</Link>
                                               </li>
                                               <li id="menu-item-102" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-102">
-                                                <Link to="taxcar">Транспортное средство</Link>
+                                                <Link to="/taxcar">Транспортное средство</Link>
                                               </li>
                                               {/* <li id="menu-item-95" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-95">
                                                 <a>Service
@@ -244,7 +244,7 @@ function DefaultNavbar({ transparent, light, action }) {
                                       </li>
                                       
                                       <li id="menu-item-94" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-94">
-                                        <Link to='blog'>Новости</Link>
+                                        <Link to='/blog'>Новости</Link>
                                         {/* <ul className="sub-menu">
                                           <li id="menu-item-104" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-104">
                                             <a>Blog</a>
@@ -265,13 +265,13 @@ function DefaultNavbar({ transparent, light, action }) {
                                         <ul className="sub-menu">
                                     
                                           <li id="menu-item-8925" className="menu-item menu-item-type-post_type menu-item-object-product menu-item-8925">
-                                            <Link to="taxhome">Расчет налога на имущество на жилое здание, сооружение и помещение</Link>
+                                            <Link to="/taxhome">Расчет налога на имущество на жилое здание, сооружение и помещение</Link>
                                           </li>
                                           <li id="menu-item-8923" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-8923">
-                                            <Link to="taxnohome">Расчет налога на имущество на нежилое здание, сооружение и помещение</Link>
+                                            <Link to="/taxnohome">Расчет налога на имущество на нежилое здание, сооружение и помещение</Link>
                                           </li>
                                           <li id="menu-item-8921" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-8921">
-                                            <Link to="taxplace">Расчет налога на имущество на земли населенных пунктов и земли несельскохозяйственного назначения</Link>
+                                            <Link to="/taxplace">Расчет налога на имущество на земли населенных пунктов и земли несельскохозяйственного назначения</Link>
                                           </li>
                                           <li id="menu-item-8922" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-8922">
                                             <Link to={'taxcar'}>Расчет налога на имущество на транспортное средство</Link>
@@ -280,7 +280,7 @@ function DefaultNavbar({ transparent, light, action }) {
                                         </ul>
                                       </li> */}
                                       <li id="menu-item-88" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-88">
-                                        <Link to='contacts'>Контакты</Link>
+                                        <Link to='/contacts'>Контакты</Link>
                                       </li>
                                     </ul>
                                   </nav>
@@ -317,7 +317,7 @@ function DefaultNavbar({ transparent, light, action }) {
                                           </>
                                         ) : (
                                           <>
-                                            <Link to='login' className="vs-btn">Войти<i className="far fa-arrow-right" /></Link>
+                                            <Link to='/login' className="vs-btn">Войти<i className="far fa-arrow-right" /></Link>
                                           </>
                                         )}
                                      </div>{/* End Button */}
