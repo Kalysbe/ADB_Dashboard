@@ -19,8 +19,7 @@ import Grid from "@mui/material/Grid";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import React from 'react';
-import { useNavigate, Navigate, useParams } from "react-router-dom";
-import { useSelector } from 'react-redux';
+
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -37,16 +36,13 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
-import { selectIsAuth } from "../../redux/slices/auth";
+
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
-  const navigate = useNavigate();
-  const isAuth = useSelector(selectIsAuth);
 
-  if (!window.localStorage.getItem("token") && !isAuth) {
-    return <Navigate to="/authentication/sign-in" />;
-  }
+
+ 
   return (
     <DashboardLayout>
       <DashboardNavbar />

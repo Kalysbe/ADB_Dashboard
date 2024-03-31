@@ -14,7 +14,8 @@ Coded by www.creative-tim.com
 */
 
 import { useEffect } from "react";
-
+import { useNavigate, Navigate, useParams } from "react-router-dom";
+import { useSelector } from 'react-redux';
 // react-router-dom components
 import { useLocation } from "react-router-dom";
 
@@ -26,7 +27,7 @@ import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React context
 import { useMaterialUIController, setLayout } from "context";
-
+import { selectIsAuth } from "../../../redux/slices/auth";
 function DashboardLayout({ children }) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav } = controller;
@@ -35,6 +36,13 @@ function DashboardLayout({ children }) {
   useEffect(() => {
     setLayout(dispatch, "dashboard");
   }, [pathname]);
+
+  const navigate = useNavigate();
+  const isAuth = useSelector(selectIsAuth);
+
+  if (!window.localStorage.getItem("token") && !isAuth) {
+    return <Navigate to="/authentication/sign-in" />;
+  }
 
   return (
     <MDBox
