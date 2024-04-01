@@ -34,7 +34,7 @@ import 'swiper/css/pagination';
 import { FreeMode, Pagination } from 'swiper/modules';
 
 
-import { SectionOne } from './components/SectionOne';
+import { Carousel } from './components/Carousel';
 import { SectionTwo } from './components/SectionTwo';
 import { SectionThree } from './components/SectionThree';
 import { SectionFour } from './components/Projects';
@@ -99,7 +99,7 @@ function Basic (props)  {
         <div data-elementor-type="wp-page" data-elementor-id={61} className="elementor elementor-61">
           <div className="elementor-inner">
             <div className="elementor-section-wrap">
-              <SectionOne />
+              <Carousel />
               <SectionTwo />
               <SectionThree />
               <SectionFour />

@@ -78,9 +78,44 @@ function DefaultNavbar({ transparent, light, action }) {
     return () => window.removeEventListener("resize", displayMobileNavbar);
   }, []);
 
+  useEffect(() => {
+    const scriptFiles = [
+      'init.js',
+      'main.js',
+      // Add the names of the remaining script files
+    ];
 
+    const removeScripts = () => {
+      const dynamicScripts = document.querySelectorAll('.dynamic-script');
+      dynamicScripts.forEach((script) => {
+        script.remove();
+      });
+    };
+
+    const loadScript = (src) => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = `./js/${src}`;
+        script.async = true;
+        script.classList.add('dynamic-script'); // Add a class to identify dynamically added scripts
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.appendChild(script);
+      });
+    };
+
+    const loadScriptsAsync = async () => {
+      removeScripts(); // Remove dynamically added scripts before adding new ones
+      const scriptPromises = scriptFiles.map((fileName) => loadScript(fileName));
+      await Promise.all(scriptPromises);
+    };
+
+    loadScriptsAsync();
+  }, [location.pathname]);
+
+  const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
-
+    console.log(isAuth,'login')
   const newLocal = "../";
   return (
 <header className="header">
@@ -177,7 +212,7 @@ function DefaultNavbar({ transparent, light, action }) {
                               <div className="elementor-element elementor-element-28599e5 vs-logo elementor-widget elementor-widget-techbizimage" data-id="28599e5" data-element_type="widget" data-widget_type="techbizimage.default">
                                 <div className="elementor-widget-container">
                                   {/* Advertisement Image */}
-                                  <div className="techbiz_img "><a href="/"><img src='@/assets/images/logo.png' alt="logo5" /> </a></div>
+                                  <div className="techbiz_img "><a href="/"><img src={logo} alt="logo5" /> </a></div>
                                   {/* End Advertisement Image */}
                                 </div>
                               </div>
@@ -221,64 +256,12 @@ function DefaultNavbar({ transparent, light, action }) {
                                           <li id="menu-item-90" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-90">
                                             <a>Заполнению декларации</a>
                                           </li>
-                                          {/* <li id="menu-item-89" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
-                                            <a>Project
-                                              Details</a>
-                                          </li>
-                                          <li id="menu-item-92" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-92">
-                                            <a>Team</a>
-                                          </li>
-                                          <li id="menu-item-91" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-91">
-                                            <a>Team
-                                              Details</a>
-                                          </li>
-                                          <li id="menu-item-116" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-116">
-                                            <a>Pricing
-                                              Plan</a>
-                                          </li>
-                                          <li id="menu-item-118" className="menu-item menu-item-type-custom menu-item-object-custom menu-item-118">
-                                            <a>404
-                                              Page</a>
-                                          </li> */}
                                         </ul>
                                       </li>
                                       
                                       <li id="menu-item-94" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-94">
                                         <Link to='/blog'>Новости</Link>
-                                        {/* <ul className="sub-menu">
-                                          <li id="menu-item-104" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-104">
-                                            <a>Blog</a>
-                                          </li>
-                                          <li id="menu-item-103" className="menu-item menu-item-type-post_type menu-item-object-post menu-item-103">
-                                            <a>Blog
-                                              Details</a>
-                                          </li>
-                                        </ul> */}
                                       </li>
-                                      {/* <li id="menu-item-97" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-97">
-                                        <a>О
-                                          Нас</a>
-                                      </li> */}
-
-                                      {/* <li id="menu-item-8919" className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-8919">
-                                        <a href="#">Сервисы</a>
-                                        <ul className="sub-menu">
-                                    
-                                          <li id="menu-item-8925" className="menu-item menu-item-type-post_type menu-item-object-product menu-item-8925">
-                                            <Link to="/taxhome">Расчет налога на имущество на жилое здание, сооружение и помещение</Link>
-                                          </li>
-                                          <li id="menu-item-8923" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-8923">
-                                            <Link to="/taxnohome">Расчет налога на имущество на нежилое здание, сооружение и помещение</Link>
-                                          </li>
-                                          <li id="menu-item-8921" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-8921">
-                                            <Link to="/taxplace">Расчет налога на имущество на земли населенных пунктов и земли несельскохозяйственного назначения</Link>
-                                          </li>
-                                          <li id="menu-item-8922" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-8922">
-                                            <Link to={'taxcar'}>Расчет налога на имущество на транспортное средство</Link>
-                                          </li>
-
-                                        </ul>
-                                      </li> */}
                                       <li id="menu-item-88" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-88">
                                         <Link to='/contacts'>Контакты</Link>
                                       </li>
