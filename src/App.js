@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect, useMemo } from "react";
+import {React, useState, useEffect, useMemo } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -22,7 +22,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
-
+import { useDispatch, useSelector } from 'react-redux';
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
@@ -46,6 +46,7 @@ import createCache from "@emotion/cache";
 // Material Dashboard 2 React routes
 import routes from "routes";
 
+import { fetchAuthMe, logout, selectIsAuth } from './redux/slices/auth';
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
@@ -181,6 +182,12 @@ export default function App() {
       </Icon>
     </MDBox>
   );
+  const dispath = useDispatch()
+  const isAuth = useSelector(selectIsAuth);
+
+  useEffect(() => {
+    dispath(fetchAuthMe())
+  }, [])
 
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
