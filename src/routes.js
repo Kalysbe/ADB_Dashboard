@@ -49,6 +49,11 @@ import Home from "layouts/main/Home";
 import Blog from "layouts/main/Blog";
 import Contacts from "layouts/main/Contacts"
 
+import TaxCar from "layouts/main/Taxes/TaxCar";
+import TaxHome from "layouts/main/Taxes/TaxHome";
+import TaxNoHome from "layouts/main/Taxes/TaxNoHome";
+import TaxPlace from "layouts/main/Taxes/TaxPlace";
+
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -125,19 +130,40 @@ const routes = [
     component: <Home />,
   },
   {
-    type: "collapse",
     name: "Blog",
     key: "main",
     route: "/blog",
     component: <Blog />,
   },
   {
-   
-    type: "collapse",
     name: "Contacts",
     key: "contacts",
     route: "/contacts",
     component: <Contacts />,
+  },
+  {
+    name: "TaxCar",
+    key: "taxcar",
+    route: "/taxcar",
+    component: <TaxCar />,
+  },
+  {
+    name: "TaxHome",
+    key: "taxhome",
+    route: "/taxhome",
+    component: <TaxHome />,
+  },
+  {
+    name: "TaxNoHome",
+    key: "taxnohome",
+    route: "/taxnohome",
+    component: <TaxNoHome />,
+  },
+  {
+    name: "taxplace",
+    key: "taxplace",
+    route: "/taxplace",
+    component: <TaxPlace />,
   }
 ];
 

@@ -26,7 +26,7 @@ function Basic (props) {
   }, [])
 
 
-  console.log(posts)
+ 
 
   return (
     <BasicLayout>
