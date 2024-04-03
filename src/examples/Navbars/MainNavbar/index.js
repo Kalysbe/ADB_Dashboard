@@ -78,40 +78,7 @@ function DefaultNavbar({ transparent, light, action }) {
     return () => window.removeEventListener("resize", displayMobileNavbar);
   }, []);
 
-  useEffect(() => {
-    const scriptFiles = [
-      'init.js',
-      'main.js',
-      // Add the names of the remaining script files
-    ];
 
-    const removeScripts = () => {
-      const dynamicScripts = document.querySelectorAll('.dynamic-script');
-      dynamicScripts.forEach((script) => {
-        script.remove();
-      });
-    };
-
-    const loadScript = (src) => {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = `./js/${src}`;
-        script.async = true;
-        script.classList.add('dynamic-script'); // Add a class to identify dynamically added scripts
-        script.onload = resolve;
-        script.onerror = reject;
-        document.body.appendChild(script);
-      });
-    };
-
-    const loadScriptsAsync = async () => {
-      removeScripts(); // Remove dynamically added scripts before adding new ones
-      const scriptPromises = scriptFiles.map((fileName) => loadScript(fileName));
-      await Promise.all(scriptPromises);
-    };
-
-    loadScriptsAsync();
-  }, [location.pathname]);
   const onClickLogout = () => {
     if (window.confirm('Вы правда хотите выйти?')) {
       dispatch(logout());
@@ -202,7 +169,7 @@ function DefaultNavbar({ transparent, light, action }) {
                 </div>
               </div>
             </section>
-            <section className="elementor-section elementor-top-section elementor-element elementor-element-8edf5e6 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="8edf5e6" data-element_type="section">
+            <section className="elementor-section elementor-top-section elementor-element elementor-element-8edf5e6 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="8edf5e6" data-element_type="section" style={{backgroundColor:'#fff'}}>
               <div className="elementor-container elementor-column-gap-no">
                 <div className="elementor-row">
                   <div className="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-fa9d704" data-id="fa9d704" data-element_type="column">
