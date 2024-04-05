@@ -45,8 +45,13 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
+//dashboard
+
+import AddPost from "layouts/addPost";
+
 import Home from "layouts/main/Home";
 import Blog from "layouts/main/Blog";
+import  FullPost  from "layouts/main/FullPost";
 import Contacts from "layouts/main/Contacts"
 
 import TaxCar from "layouts/main/Taxes/TaxCar";
@@ -97,6 +102,14 @@ const routes = [
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/notifications",
     component: <Notifications />,
+  },
+  {
+    type: "collapse",
+    name: "Новости",
+    key: "add-post",
+    icon: <Icon fontSize="small">notifications</Icon>,
+    route: "/add-post",
+    component: <AddPost />,
   },
   {
     type: "collapse",
@@ -164,6 +177,12 @@ const routes = [
     key: "taxplace",
     route: "/taxplace",
     component: <TaxPlace />,
+  },
+  {
+    name: "fullpost",
+    key: "fullpost",
+    route: "/posts/:id",
+    component: <FullPost />,
   }
 ];
 
