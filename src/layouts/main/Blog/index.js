@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 
 import { Post } from 'components/Post';
 import { fetchPosts, fetchTags } from '../../../redux/slices/post';
-
+import DataTable from "examples/Tables/DataTable";
 import { useMediaQuery } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Container } from '@mui/material';
@@ -35,10 +35,7 @@ function Basic (props) {
         <Typography variant={isMobile ? 'h5' : 'h4'} gutterBottom>
           Статьи
         </Typography>
-
-      
-{/* <TagsBlock items={tags.items} isLoading={isTagsLoading} /> */}
-
+  
         <Grid container spacing={2}>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
             isPostsLoading ? (

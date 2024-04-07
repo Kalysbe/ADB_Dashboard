@@ -40,6 +40,7 @@ import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
+import EditBlog from "layouts/Blog"
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
@@ -51,7 +52,7 @@ import AddPost from "layouts/addPost";
 
 import Home from "layouts/main/Home";
 import Blog from "layouts/main/Blog";
-import  FullPost  from "layouts/main/FullPost";
+import FullPost  from "layouts/main/FullPost";
 import Contacts from "layouts/main/Contacts"
 
 import TaxCar from "layouts/main/Taxes/TaxCar";
@@ -74,10 +75,10 @@ const routes = [
   {
     type: "collapse",
     name: "Блог",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
+    key: "allposts",
+    icon: <Icon fontSize="small">notifications</Icon>,
+    route: "/allposts",
+    component: <EditBlog />,
   },
   {
     type: "collapse",
@@ -87,14 +88,6 @@ const routes = [
     route: "/billing",
     component: <Billing />,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Декларация",
-  //   key: "rtl",
-  //   icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-  //   route: "/rtl",
-  //   component: <RTL />,
-  // },
   {
     type: "collapse",
     name: "Декларация",
@@ -105,22 +98,43 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Новости",
+    name: "Справочник",
+    key: "tables",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/tables",
+    component: <Tables />,
+  },
+
+  // {
+  //   type: "collapse",
+  //   name: "Декларация",
+  //   key: "rtl",
+  //   icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
+  //   route: "/rtl",
+  //   component: <RTL />,
+  // },
+
+ 
+  {
     key: "add-post",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/add-post",
+    route: "/add-post", 
+    component: <AddPost />,
+  },
+  {
+    key: "editpost",
+    route: "/posts/:id/edit", 
     component: <AddPost />,
   },
   {
     type: "collapse",
-    name: "Profile",
+    name: "Налоговый кодекс",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
     component: <Profile />,
   },
   {
-    type: "collapse",
+  
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
@@ -128,7 +142,7 @@ const routes = [
     component: <SignIn />,
   },
   {
-    type: "collapse",
+
     name: "Sign Up",
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
@@ -179,7 +193,7 @@ const routes = [
     component: <TaxPlace />,
   },
   {
-    name: "fullpost",
+    name: "addpost",
     key: "fullpost",
     route: "/posts/:id",
     component: <FullPost />,

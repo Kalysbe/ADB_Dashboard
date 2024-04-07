@@ -32,6 +32,72 @@ import logoSlack from "assets/images/small-logos/logo-slack.svg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 import logoInvesion from "assets/images/small-logos/logo-invision.svg";
 
+
+const materialsArray = [
+  {
+    title: 'Кирпич', data: [
+      { ageRange: 'До 5 лет', cost: 15000 },
+      { ageRange: '5-15 лет', cost: 14000 },
+      { ageRange: '15-30 лет', cost: 13000 },
+      { ageRange: '30-45 лет', cost: 12000 },
+      { ageRange: 'Более 45 лет', cost: 10000 },
+    ]
+  },
+
+  {
+    title: 'Дерево', data: [
+      { ageRange: 'До 5 лет', cost: 13000 },
+      { ageRange: '5-15 лет', cost: 12000 },
+      { ageRange: '15-30 лет', cost: 11000 },
+      { ageRange: '30-45 лет', cost: 10000 },
+      { ageRange: 'Более 45 лет', cost: 8000 },
+    ]
+  },
+
+  {
+    title: 'Сборный и монолитный бетон и железобетон, бетонные блоки, пескоблок, пеноблок, пенобетон, стекло', data: [
+      { ageRange: 'До 5 лет', cost: 14000 },
+      { ageRange: '5-15 лет', cost: 13000 },
+      { ageRange: '15-30 лет', cost: 12000 },
+      { ageRange: '30-45 лет', cost: 11000 },
+      { ageRange: 'Более 45 лет', cost: 10000 },
+    ]
+  },
+
+  {
+    title: 'Сырцовая глина (саман, гуваляк, сокмо)', data: [
+      { ageRange: 'До 5 лет', cost: 10000 },
+      { ageRange: '5-15 лет', cost: 9000 },
+      { ageRange: '15-30 лет', cost: 8000 },
+      { ageRange: '30-45 лет', cost: 6000 },
+      { ageRange: 'Более 45 лет', cost: 5000 },
+    ]
+  },
+
+  {
+    title: 'Шлакоблок, полистирольный строительный блок', data: [
+      { ageRange: 'До 5 лет', cost: 9000 },
+      { ageRange: '5-15 лет', cost: 8000 },
+      { ageRange: '15-30 лет', cost: 7000 },
+      { ageRange: '30-45 лет', cost: 6000 },
+      { ageRange: 'Более 45 лет', cost: 5000 },
+    ]
+  },
+
+  {
+    title: 'Металл', data: [
+      { ageRange: 'До 30 лет', cost: 10000 },
+      { ageRange: 'Более 30 лет', cost: 8000 },
+    ]
+  },
+
+  {
+    title: 'Прочие материалы и материалы для временных помещений', data: [
+      { ageRange: 'Вне зависимости от срока эксплуатации', cost: 4000 },
+    ]
+  },
+];
+
 export default function data() {
   const Project = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>

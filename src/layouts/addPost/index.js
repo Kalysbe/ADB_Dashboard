@@ -7,6 +7,10 @@ import Button from '@mui/material/Button';
 import SimpleMDE from 'react-simplemde-editor';
 import Container from '@mui/material/Container';
 
+
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+
 import 'easymde/dist/easymde.min.css';
 import { selectIsAuth } from '../../redux/slices/auth';
 import axios from '../../axios';
@@ -107,6 +111,8 @@ function AddPost() {
   }
 
   return (
+    <DashboardLayout>
+       <DashboardNavbar  />
     <Container>
       <Paper style={{ padding: 30 }}>
         <Button disabled={true} onClick={() => inputFileRef.current.click()} variant="outlined" size="large">
@@ -154,6 +160,7 @@ function AddPost() {
         </div>
       </Paper>
     </Container>
+    </DashboardLayout>
   );
 };
 
