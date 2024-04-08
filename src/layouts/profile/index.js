@@ -16,16 +16,16 @@ Coded by www.creative-tim.com
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-
+import Card from "@mui/material/Card";
 // @mui icons
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import React, { useState } from 'react';
-import { Document, Page } from 'react-pdf';
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -69,6 +69,8 @@ function Overview() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <MDBox mt={8} px={2}>
+      <Card>
       <p>НАЛОГОВЫЙ КОДЕКС КЫРГЫЗСКОЙ РЕСПУБЛИКИ</p>
       <p><strong>&nbsp;</strong></p>
       <p>от 18 января 2022 года № 3</p>
@@ -124,6 +126,8 @@ function Overview() {
         </tbody>
       </table>
       {/* <Footer /> */}
+      </Card>
+      </MDBox>
     </DashboardLayout>
   );
 }
