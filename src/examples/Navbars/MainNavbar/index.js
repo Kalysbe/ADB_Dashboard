@@ -17,6 +17,7 @@ import { React, useState, useEffect } from "react";
 
 // react-router components
 import { Link } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectIsAuth } from '../../../redux/slices/auth';
 // prop-types is a library for typechecking of props.
@@ -169,7 +170,7 @@ function DefaultNavbar({ transparent, light, action }) {
                 </div>
               </div>
             </section>
-            <section className="elementor-section elementor-top-section elementor-element elementor-element-8edf5e6 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="8edf5e6" data-element_type="section" style={{backgroundColor:'#fff'}}>
+            <section className="elementor-section elementor-top-section elementor-element elementor-element-8edf5e6 elementor-section-full_width elementor-section-height-default elementor-section-height-default" data-id="8edf5e6" data-element_type="section" style={{ backgroundColor: '#fff' }}>
               <div className="elementor-container elementor-column-gap-no">
                 <div className="elementor-row">
                   <div className="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-fa9d704" data-id="fa9d704" data-element_type="column">
@@ -266,13 +267,16 @@ function DefaultNavbar({ transparent, light, action }) {
 
                                           {isAuth ? (
                                             <>
-                                              <MDButton variant="contained" color="info">
-                                                <Link to='/dashboard' style={{color:'#fff'}}>Кабинет</Link>
+                                              <MDButton variant="contained" color="info"
+                                                component={NavLink}
+                                                to="/dashboard">
+                                               Кабинет
                                               </MDButton>
                                             </>
                                           ) : (
                                             <>
-                                              <Link to='/login' className="vs-btn">Войти<i className="far fa-arrow-right" /></Link>
+                                              <Link to='/authentication/sign-in' className="vs-btn">Войти<i className="far fa-arrow-right" /></Link>
+                                          
                                             </>
                                           )}
                                         </div>{/* End Button */}

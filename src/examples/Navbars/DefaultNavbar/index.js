@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 
 // react-router components
 import { Link } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -110,24 +111,12 @@ function DefaultNavbar({ transparent, light, action }) {
           pl={{ xs: 0, lg: 1 }}
         >
           <MDTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
-            Material Dashboard 2
+            ADB SOLUTION
           </MDTypography>
         </MDBox>
         <MDBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
-          <DefaultNavbarLink icon="donut_large" name="dashboardd" route="/dashboard" light={light} />
-          <DefaultNavbarLink icon="person" name="profile" route="/profile" light={light} />
-          <DefaultNavbarLink
-            icon="account_circle"
-            name="sign up"
-            route="/authentication/sign-up"
-            light={light}
-          />
-          <DefaultNavbarLink
-            icon="key"
-            name="sign in"
-            route="/authentication/sign-in"
-            light={light}
-          />
+        
+          
         </MDBox>
         {action &&
           (action.type === "internal" ? (
@@ -143,11 +132,10 @@ function DefaultNavbar({ transparent, light, action }) {
               </MDButton>
             </MDBox>
           ) : (
-            <MDBox display={{ xs: "none", lg: "inline-block" }}>
+            <MDBox>
               <MDButton
-                component="a"
-                href={action.route}
-                target="_blank"
+                component={NavLink}
+                to={action.route}
                 rel="noreferrer"
                 variant="gradient"
                 color={action.color ? action.color : "info"}
@@ -158,19 +146,9 @@ function DefaultNavbar({ transparent, light, action }) {
               </MDButton>
             </MDBox>
           ))}
-        <MDBox
-          display={{ xs: "inline-block", lg: "none" }}
-          lineHeight={0}
-          py={1.5}
-          pl={1.5}
-          color="inherit"
-          sx={{ cursor: "pointer" }}
-          onClick={openMobileNavbar}
-        >
-          <Icon fontSize="default">{mobileNavbar ? "close" : "menu"}</Icon>
-        </MDBox>
+    
       </MDBox>
-      {mobileView && <DefaultNavbarMobile open={mobileNavbar} close={closeMobileNavbar} />}
+    
     </Container>
   );
 }
