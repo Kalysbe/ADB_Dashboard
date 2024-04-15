@@ -114,9 +114,9 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
+                  title="Посетители веб-сайта"
+                  // description="Данные за неделю"
+                  date="Данные за неделю"
                   chart={reportsBarChartData}
                 />
               </MDBox>
