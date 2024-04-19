@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Grid, Typography, FormControl, InputLabel, Select, MenuItem, TextField, Button, Container } from '@mui/material';
-import BasicLayout from "../../components/BasicLayout";
+import MDBox from "components/MDBox";
 
 function TaxNoHome() {
   const provinces = [
@@ -227,12 +227,9 @@ function TaxNoHome() {
 
 
   return (
-    <BasicLayout>
-    <Container>
+
+    <MDBox>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant="h5">Расчет налога на имущество на нежилое здание, сооружение и помещение</Typography>
-        </Grid>
         <Grid item xs={12} md={4}>
           <FormControl fullWidth margin="normal">
             <InputLabel>Область</InputLabel>
@@ -320,8 +317,7 @@ function TaxNoHome() {
           <p>Исчисление налоговой стоимости (сом): {result}</p>
         </Grid>
       </Grid>
-    </Container>
-    </BasicLayout>
+   </MDBox>
   )
 };
 

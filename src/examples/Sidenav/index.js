@@ -187,7 +187,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           color={sidenavColor}
           fullWidth
         >
-         Главная страница
+         Главная страница 
         </MDButton>
       </MDBox>
     </SidenavRoot>
