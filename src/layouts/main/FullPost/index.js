@@ -25,7 +25,7 @@ function Basic()  {
     })
   }, [])
 
-  console.log(params)
+
 
   if(isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
