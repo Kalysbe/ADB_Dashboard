@@ -130,7 +130,7 @@ const routes = [
     name: "Налоговый кодекс",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
+    route: "/codex",
     component: <Profile />,
   },
   {
