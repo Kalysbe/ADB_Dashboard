@@ -128,7 +128,7 @@ const routes = [
   {
     type: "collapse",
     name: "Налоговый кодекс",
-    key: "profile",
+    key: "codex",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/codex",
     component: <Profile />,
