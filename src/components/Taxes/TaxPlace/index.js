@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TextField, Button, Select, MenuItem, FormControl, InputLabel, Grid, Typography, Box, Container } from '@mui/material';
+import MDButton from 'components/MDButton';
 import MDBox from "components/MDBox";
 
 function TaxPlace() {
@@ -249,9 +250,9 @@ function TaxPlace() {
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={4}>
-          <Button onClick={calculateCost} variant="contained" style={{ backgroundColor: 'rgb(205, 179, 47)', marginLeft: 'auto' }} className='vs-btn' fullWidth>
+          <MDButton onClick={calculateCost} variant="contained" color="info" style={{ backgroundColor: 'rgb(205, 179, 47)', marginLeft: 'auto' }} fullWidth>
             Рассчитать
-          </Button>
+          </MDButton>
           <p>Исчисление налоговой стоимости (сом): {result}</p>
         </Grid>
       </Grid>

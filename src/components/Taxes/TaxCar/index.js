@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Select, MenuItem, FormControl, InputLabel, Grid, Typography, Box, Container } from '@mui/material';
-
+import MDTypography from "components/MDTypography";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDButton from 'components/MDButton';
@@ -85,10 +85,10 @@ function TaxCar() {
   return (
   
       // <Card id="delete-account">
-        <MDBox pt={3} px={2}>
+        <MDBox pt={3}>
           {/* <Typography className="contact-box__title" variant='h5'>Расчет налога на имущество на транспортное средство</Typography> */}
           {/* <p className="contact-box__text">a) Объекты, имеющие двигатель внутреннего сгорания</p> */}
-          <Typography variant="h6">a) Объекты, имеющие  двигатель с внутренним сгоранием</Typography>
+          <MDTypography variant="h5">a) Объекты, имеющие  двигатель с внутренним сгоранием</MDTypography>
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
               <TextField
@@ -141,7 +141,7 @@ function TaxCar() {
               <Typography variant="body1">Исчисление налоговой стоимости (сом): {taxResult}</Typography>
             </Grid>
           </Grid>
-          <Typography variant="h6">б) Транспортные средства, не имеющие двигателя внутреннего сгорания</Typography>
+          <MDTypography variant="h5">б) Транспортные средства, не имеющие двигателя внутреннего сгорания</MDTypography>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <TextField
@@ -164,9 +164,9 @@ function TaxCar() {
               />
             </Grid>
             <Grid item xs={12} md={4}>
-              <Button onClick={calculateTax2} variant="contained" style={{ backgroundColor: 'rgb(205, 179, 47)' }} className='vs-btn' fullWidth>
+              <MDButton onClick={calculateTax2} variant="contained" color='info' style={{ backgroundColor: 'rgb(205, 179, 47)' }} className='vs-btn' fullWidth>
                 Рассчитать
-              </Button>
+              </MDButton>
               <Typography variant="body1">Исчисление налоговой стоимости (сом): {taxResult2}</Typography>
             </Grid>
           </Grid>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Grid, Typography, FormControl, InputLabel, Select, MenuItem, TextField, Button, Container } from '@mui/material';
 import MDBox from "components/MDBox";
-
+import MDButton from 'components/MDButton';
 function TaxNoHome() {
   const provinces = [
     {
@@ -311,9 +311,9 @@ function TaxNoHome() {
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
-          <Button onClick={calculateCost} variant="contained" style={{ backgroundColor: 'rgb(205, 179, 47)', marginLeft: 'auto' }} className='vs-btn' fullWidth>
+          <MDButton onClick={calculateCost} variant="contained" style={{ backgroundColor: 'rgb(205, 179, 47)', marginLeft: 'auto' }} color='info' fullWidth>
             Рассчитать
-          </Button>
+          </MDButton>
           <p>Исчисление налоговой стоимости (сом): {result}</p>
         </Grid>
       </Grid>
