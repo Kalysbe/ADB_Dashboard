@@ -44,7 +44,8 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
-import { fetchAuth, selectIsAuth } from "../../../redux/slices/auth";
+import { fetchAuth,  } from "../../../redux/actions/auth";
+import { selectIsAuth } from "../../../redux/slices/auth";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);

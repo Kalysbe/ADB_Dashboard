@@ -43,6 +43,7 @@ import RTL from "layouts/rtl";
 import EditBlog from "layouts/Blog"
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
+import Users from "layouts/users";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
@@ -70,7 +71,17 @@ const routes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
+    title:'12',
     component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Пользователи",
+    key: "users",
+    icon: <Icon fontSize="small">notifications</Icon>,
+    route: "/users",
+    component: <Users />,
+    role:[1]
   },
   {
     type: "collapse",
@@ -79,6 +90,7 @@ const routes = [
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/allposts",
     component: <EditBlog />,
+    role:[1,2]
   },
   {
     type: "collapse",

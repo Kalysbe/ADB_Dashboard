@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 import { useEffect } from "react";
+import { useDispatch , useSelector  } from 'react-redux';
 
 // react-router-dom components
 import { useLocation, NavLink } from "react-router-dom";
@@ -39,6 +40,8 @@ import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 
+import { fetchAuthMe } from '../../redux/actions/auth';
+
 // Material Dashboard 2 React context
 import {
   useMaterialUIController,
@@ -48,6 +51,12 @@ import {
 } from "context";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
+  const dispatchRedux = useDispatch()
+  const  data  = useSelector(state => state.auth.data);
+  const userRole = data
+ 
+  console.log( userRole ,'test')
+
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
@@ -64,6 +73,12 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
   useEffect(() => {
+    console.log(12312)
+    dispatchRedux(fetchAuthMe())
+  }, []);
+
+  useEffect(() => {
+
     // A function that sets the mini state of the sidenav.
     function handleMiniSidenav() {
       setMiniSidenav(dispatch, window.innerWidth < 1200);
@@ -78,13 +93,15 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
     // Call the handleMiniSidenav function to set the state with the initial value.
     handleMiniSidenav();
-
+  
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleMiniSidenav);
+
+
   }, [dispatch, location]);
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
-  const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
+  const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route , role }) => {
     let returnValue;
 
     if (type === "collapse") {

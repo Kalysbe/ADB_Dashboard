@@ -46,7 +46,8 @@ import createCache from "@emotion/cache";
 // Material Dashboard 2 React routes
 import routes from "routes";
 
-import { fetchAuthMe, logout, selectIsAuth } from './redux/slices/auth';
+import { fetchAuthMe  } from './redux/actions/auth';
+import { selectIsAuth } from './redux/slices/auth'
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
