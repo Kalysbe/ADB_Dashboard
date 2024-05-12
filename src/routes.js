@@ -73,6 +73,7 @@ const routes = [
     route: "/dashboard",
     title:'12',
     component: <Dashboard />,
+    role:[1,5]
   },
   {
     type: "collapse",
@@ -90,7 +91,7 @@ const routes = [
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/allposts",
     component: <EditBlog />,
-    role:[1,2]
+    role:[1]
   },
   {
     type: "collapse",
@@ -99,6 +100,7 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/billing",
     component: <Billing />,
+    role:[1]
   },
   {
     type: "collapse",
@@ -107,6 +109,7 @@ const routes = [
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/notifications",
     component: <Notifications />,
+    role:[1]
   },
   {
     type: "collapse",
@@ -115,6 +118,7 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
     component: <Tables />,
+    role:[1]
   },
 
   // {
@@ -131,11 +135,13 @@ const routes = [
     key: "add-post",
     route: "/add-post", 
     component: <AddPost />,
+    role:[1]
   },
   {
     key: "editpost",
     route: "/posts/:id/edit", 
     component: <AddPost />,
+    role:[1]
   },
   {
     type: "collapse",
@@ -144,6 +150,7 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/codex",
     component: <Profile />,
+    role:[1]
   },
   {
   
@@ -152,6 +159,7 @@ const routes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
+    role:[1]
   },
   {
 
@@ -160,6 +168,7 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
+    role:[1]
   },
   {
     
@@ -167,48 +176,56 @@ const routes = [
     key: "main",
     route: "/",
     component: <Home />,
+    role:[1]
   },
   {
     name: "Blog",
     key: "main",
     route: "/blog",
     component: <Blog />,
+    role:[1]
   },
   {
     name: "Contacts",
     key: "contacts",
     route: "/contacts",
     component: <Contacts />,
+    role:[1]
   },
   {
     name: "TaxCar",
     key: "taxcar",
     route: "/taxcar",
     component: <TaxCar />,
+    role:[1]
   },
   {
     name: "TaxHome",
     key: "taxhome",
     route: "/taxhome",
     component: <TaxHome />,
+    role:[1]
   },
   {
     name: "TaxNoHome",
     key: "taxnohome",
     route: "/taxnohome",
     component: <TaxNoHome />,
+    role:[1]
   },
   {
     name: "taxplace",
     key: "taxplace",
     route: "/taxplace",
     component: <TaxPlace />,
+    role:[1]
   },
   {
     name: "addpost",
     key: "fullpost",
     route: "/posts/:id",
     component: <FullPost />,
+    role:[1]
   }
 ];
 
