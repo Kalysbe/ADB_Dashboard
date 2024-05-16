@@ -43,11 +43,20 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
-import { fetchUsers, fetchDeleteUser } from '../../redux/actions/users';
+import { fetchUsers, fetchAddUsers, fetchUpdateUsers, fetchDeleteUser } from '../../redux/actions/users';
 import Swal from 'sweetalert2';
 
 function SimpleDialog(props) {
-  const { onClose, selectedValue, open , formAct , user} = props;
+  const dispatch = useDispatch();
+  const { onClose, selectedValue, open, formAct, user } = props;
+  const [data, setData] = useState('')
+  const [userId, setUserId] = useState(null)
+
+  useEffect(() => {
+    const { _id, ...newUser } = user
+    setData(newUser)
+    setUserId(_id)
+  }, [user]);
 
 
   const handleClose = () => {
@@ -57,6 +66,49 @@ function SimpleDialog(props) {
   const handleListItemClick = (value) => {
     onClose(value);
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const onSubmit = async () => {
+    try {
+
+      if (formAct === 'upd') {
+        console.log(data)
+        dispatch(fetchUpdateUsers({ id: userId, data: data }));
+      } else {
+        console.log(data, 'datafetch')
+        dispatch(fetchAddUsers(data));
+      }
+
+      handleClose();
+
+      await Swal.fire({
+        title: 'Успешно!',
+        text: 'Данные успешно отправлены',
+        icon: 'success',
+        confirmButtonText: 'Ок'
+      });
+
+      // Возможно, здесь вы захотите обновить UI на основе ответа от сервера
+
+    } catch (error) {
+      console.error('Ошибка при отправке данных:', error);
+      await Swal.fire({
+        title: 'Ошибка!',
+        text: 'Произошла ошибка при отправке данных на сервер',
+        icon: 'error',
+        confirmButtonText: 'Ок'
+      });
+    }
+  };
+
 
   return (
     <Dialog onClose={handleClose} open={open}>
@@ -85,11 +137,41 @@ function SimpleDialog(props) {
               </Select>
             </FormControl>
           </MDBox>
+          {Object.keys(data).map((key) => (
+            <MDBox my={2} key={key}>
+              {key === 'role' ? (
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Роль пользователя</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name={key}
+                    value={data[key]}
+                    label="Роль пользователя"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={1}>Главный админ</MenuItem>
+                    <MenuItem value={2}>Модератор</MenuItem>
+                    <MenuItem value={5}>Гость</MenuItem>
+                  </Select>
+                </FormControl>
+              ) : (
+                <MDInput
+                  fullWidth
+                  label={key}
+                  type="text"
+                  name={key}
+                  value={data[key]}
+                  onChange={handleChange}
+                />
+              )}
+            </MDBox>
+          ))}
         </MDBox>
       </DialogContent>
       <DialogActions>
         <MDButton color="error" onClick={handleClose}>Закрыть</MDButton>
-        <MDButton variant="contained" color="info" onClick={handleClose}>Сохранить</MDButton>
+        <MDButton variant="contained" color="info" onClick={onSubmit}>Сохранить</MDButton>
       </DialogActions>
     </Dialog>
   )
@@ -100,18 +182,25 @@ SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   selectedValue: PropTypes.string.isRequired,
-  formAct:PropTypes.string.isRequired,
-  user: PropTypes.array.isRequired
+  formAct: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 
 
 
 function Users() {
+  const actUser = {
+    login: '',
+    fullName: '',
+    role: '',
+    password: ''
+  }
+
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
-  const [formAct , setFormAct] = useState('')
-  const [userData , setUserData] = useState('')
+  const [formAct, setFormAct] = useState(actUser)
+  const [userData, setUserData] = useState('')
   const { users } = useSelector(state => state.users);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
@@ -119,10 +208,8 @@ function Users() {
   const actAdd = 'add'
   const actUpd = 'upd'
 
-  const actUser = {
-    login: ''
-  }
-  
+
+
 
 
   useEffect(() => {
@@ -163,12 +250,20 @@ function Users() {
 
   const onAdd = () => {
     setFormAct(actAdd)
+    setUserData(actUser)
     setOpen(true);
   };
 
   const onEdit = (id) => {
     setFormAct(actUpd)
-    setUserData(users.items.find(user => user._id == id))
+    const { _id, login, fullName, role, password } = users.items.find(user => user._id == id)
+    setUserData({
+      _id,
+      login,
+      fullName,
+      role,
+      password
+    });
     setOpen(true);
   }
 
@@ -181,7 +276,6 @@ function Users() {
     <DashboardLayout>
       <DashboardNavbar />
       <SimpleDialog
-        
         open={open}
         onClose={handleClose}
         formAct={formAct}
@@ -215,7 +309,7 @@ function Users() {
                 </MDBox>
               </MDBox>
               <MDBox mx={2}>
-                <MDInput label="Поиск по эмитентам"
+                <MDInput label="Поиск пользователей"
                   value={searchTerm}
                   onChange={handleSearchChange} fullWidth />
               </MDBox>
@@ -261,7 +355,7 @@ function Users() {
                           </MDButton>
 
 
-                          <MDButton variant="outlined" color="error" size="small" style={{ marginLeft: '8px' }} onClick={() => onDelete(item.id)}>
+                          <MDButton variant="outlined" color="error" size="small" style={{ marginLeft: '8px' }} onClick={() => onDelete(item._id)}>
                             Удалить
                           </MDButton>
 

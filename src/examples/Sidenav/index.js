@@ -17,7 +17,7 @@ import { useEffect } from "react";
 import { useDispatch , useSelector  } from 'react-redux';
 
 // react-router-dom components
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink ,Navigate} from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -53,9 +53,10 @@ import {
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const dispatchRedux = useDispatch()
   const  data  = useSelector(state => state.auth.data);
-  const userRole = data
+  const userRole = data && data.role
+  console.log(userRole)
  
-  console.log( userRole ,'test')
+
 
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
@@ -73,7 +74,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
   useEffect(() => {
-    console.log(12312)
+  
     dispatchRedux(fetchAuthMe())
   }, []);
 
@@ -102,9 +103,13 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route , role }) => {
+    if(location.pathname === route && !role.includes(userRole)) {
+      return <Navigate to="/dashboard" />;
+    }
+    console.log(route,location.pathname)
     let returnValue;
 
-    if (type === "collapse") {
+    if (type === "collapse" && role.includes(userRole)) {
       returnValue = href ? (
         <Link
           href={href}
