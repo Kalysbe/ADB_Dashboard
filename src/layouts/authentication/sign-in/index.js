@@ -59,7 +59,7 @@ function Basic() {
     handleSubmit,
     formState: { errors, isValid } } = useForm({
       defaultValues: {
-        email: '',
+        login: '',
         password: ''
       },
       mode: 'onChange'
@@ -125,11 +125,11 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form" onSubmit={handleSubmit(onSubmit)}>
             <MDBox mb={2}>
-              <MDInput type="email"
-                label="Email"
-                error={Boolean(errors.email?.message)}
-                helperText={errors.email?.message}
-                {...register('email', { required: 'Укажите почту' })}
+              <MDInput type="text"
+                label="Login"
+                error={Boolean(errors.login?.message)}
+                helperText={errors.login?.message}
+                {...register('login', { required: 'Укажите логин' })}
 
                 fullWidth
               />

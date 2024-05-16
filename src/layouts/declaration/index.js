@@ -203,19 +203,12 @@ function Users() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h5" color="white">
-                    Пользователи
+                  Декларации
                   </MDTypography>
-                </MDBox>
-                <MDBox color="text" px={2}>
-                  <MDButton variant="gradient" color="dark"
-                    onClick={onAdd}>
-                    <Icon sx={{ fontWeight: "bold" }}>add</Icon>
-                    Новый пользователь
-                  </MDButton>
                 </MDBox>
               </MDBox>
               <MDBox mx={2}>
-                <MDInput label="Поиск по эмитентам"
+                <MDInput label="Поиск по декларациям"
                   value={searchTerm}
                   onChange={handleSearchChange} fullWidth />
               </MDBox>
@@ -224,9 +217,7 @@ function Users() {
                 <Table>
                   <TableHead style={{ display: 'table-header-group' }}>
                     <TableRow>
-                      <TableCell>Логин</TableCell>
-                      <TableCell>Имя</TableCell>
-                      <TableCell>Роль</TableCell>
+                      <TableCell>Название</TableCell>
                       <TableCell>Действие</TableCell>
 
                     </TableRow>
@@ -236,37 +227,20 @@ function Users() {
                       <TableRow key={index}>
                         <TableCell>
                           <MDTypography variant="h6" color="dark">
-                            {item.login}
+                            {item.name}
                           </MDTypography>
                         </TableCell>
                         <TableCell>
-                          <MDTypography variant="h6" color="dark">
-                            {item.fullName}
-                          </MDTypography>
-                        </TableCell>
-                        <TableCell>
-                          <MDTypography variant="h6" color="dark">
-                            {item.role}
-                          </MDTypography>
-                        </TableCell>
-                        <TableCell>
-
                           <MDButton
                             variant="outlined"
                             color="info"
                             size="small"
-                            onClick={() => onEdit(item._id)}
-                          >
-                            Редактировать
+                            component={NavLink}
+                            to={`/declaration/${1}`}
+                            onClick={() => onEdit(item._id)}>
+                            Заполнить
                           </MDButton>
-
-
-                          <MDButton variant="outlined" color="error" size="small" style={{ marginLeft: '8px' }} onClick={() => onDelete(item.id)}>
-                            Удалить
-                          </MDButton>
-
                         </TableCell>
-
                       </TableRow>
                     ))}
                   </TableBody>

@@ -39,7 +39,7 @@ Coded by www.creative-tim.com
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Billing from "layouts/billing";
-import RTL from "layouts/rtl";
+import Declaration from "layouts/declaration";
 import EditBlog from "layouts/Blog"
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
@@ -48,6 +48,8 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
 //dashboard
+
+import DeclarationForm from "layouts/declaration/form";
 
 import AddPost from "layouts/addPost";
 
@@ -117,16 +119,23 @@ const routes = [
     component: <Tables />,
   },
 
-  // {
-  //   type: "collapse",
-  //   name: "Декларация",
-  //   key: "rtl",
-  //   icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-  //   route: "/rtl",
-  //   component: <RTL />,
-  // },
+  {
+    type: "collapse",
+    name: "Декларация",
+    key: "declaration",
+    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
+    route: "/declaration",
+    component: <Declaration />,
+  },
 
- 
+  {
+
+    name: "Форма деклараци",
+    key: "declaration_form",
+    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
+    route: "/declaration/:id",
+    component: <DeclarationForm />,
+  },
   {
     key: "add-post",
     route: "/add-post", 
