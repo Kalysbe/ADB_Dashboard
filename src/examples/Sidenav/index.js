@@ -40,7 +40,7 @@ import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 
-import { fetchAuthMe } from '../../redux/actions/auth';
+
 
 // Material Dashboard 2 React context
 import {
@@ -50,11 +50,11 @@ import {
   setWhiteSidenav,
 } from "context";
 
-function Sidenav({ color, brand, brandName, routes, ...rest }) {
-  const dispatchRedux = useDispatch()
-  const  data  = useSelector(state => state.auth.data);
-  const userRole = data && data.role
-  console.log(userRole)
+
+
+
+function Sidenav({ color, brand, brandName, routes, UserRole, ...rest  }) {
+
  
 
 
@@ -73,10 +73,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
-  useEffect(() => {
-  
-    dispatchRedux(fetchAuthMe())
-  }, []);
+ 
 
   useEffect(() => {
 
@@ -103,13 +100,14 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route , role }) => {
-    if(location.pathname === route && !role.includes(userRole)) {
-      return <Navigate to="/dashboard" />;
-    }
-    console.log(route,location.pathname)
+  
+    // if(location.pathname === route && !role.includes(userRole)) {
+    //   return <Navigate to="/dashboard" />;
+    // }
+
     let returnValue;
 
-    if (type === "collapse" && role.includes(userRole)) {
+    if (type === "collapse" && role.includes(UserRole)) {
       returnValue = href ? (
         <Link
           href={href}

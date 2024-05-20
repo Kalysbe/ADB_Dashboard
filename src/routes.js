@@ -75,7 +75,7 @@ const routes = [
     route: "/dashboard",
     title:'12',
     component: <Dashboard />,
-    role:[1,5]
+    role:[1,2,5]
   },
   {
     type: "collapse",
@@ -102,7 +102,7 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/billing",
     component: <Billing />,
-    role:[1]
+    role:[1,2]
   },
   {
     type: "collapse",
@@ -120,9 +120,8 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
     component: <Tables />,
-    role:[1]
+    role:[1,2]
   },
-
   {
     type: "collapse",
     name: "Декларация",
@@ -130,6 +129,7 @@ const routes = [
     icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
     route: "/declaration",
     component: <Declaration />,
+    role:[1,2]
   },
 
   {
@@ -139,6 +139,7 @@ const routes = [
     icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
     route: "/declaration/:id",
     component: <DeclarationForm />,
+    role:[1,2]
   },
   {
     key: "add-post",
@@ -159,7 +160,7 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/codex",
     component: <Profile />,
-    role:[1]
+    role:[1,2,5]
   },
   {
   

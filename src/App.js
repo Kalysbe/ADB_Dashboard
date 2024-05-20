@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import {React, useState, useEffect, useMemo } from "react";
+import { React, useState, useEffect, useMemo } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -32,21 +32,17 @@ import Configurator from "examples/Configurator";
 
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
-import themeRTL from "assets/theme/theme-rtl";
 
 // Material Dashboard 2 React Dark Mode themes
 import themeDark from "assets/theme-dark";
 import themeDarkRTL from "assets/theme-dark/theme-rtl";
 
-// RTL plugins
-import rtlPlugin from "stylis-plugin-rtl";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
+
 
 // Material Dashboard 2 React routes
 import routes from "routes";
 
-import { fetchAuthMe  } from './redux/actions/auth';
+import { fetchAuthMe } from './redux/actions/auth';
 import { selectIsAuth } from './redux/slices/auth'
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
@@ -104,18 +100,9 @@ export default function App() {
     darkMode,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
-  const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
 
-  // Cache for the rtl
-  useMemo(() => {
-    const cacheRtl = createCache({
-      key: "rtl",
-      stylisPlugins: [rtlPlugin],
-    });
 
-    setRtlCache(cacheRtl);
-  }, []);
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
@@ -159,7 +146,7 @@ export default function App() {
 
       return null;
     });
-   
+
   const configsButton = (
     <MDBox
       display="flex"
@@ -185,40 +172,22 @@ export default function App() {
   );
   const dispath = useDispatch()
   const isAuth = useSelector(selectIsAuth);
+  const data = useSelector(state => state.auth.data);
+  const userRole = data && data.role
 
   useEffect(() => {
-    dispath(fetchAuthMe())
+    if (localStorage.getItem('token')) {
+      dispath(fetchAuthMe())
+    }
+
   }, [])
 
-  return direction === "rtl" ? (
-    <CacheProvider value={rtlCache}>
-      <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
-        <CssBaseline /> 
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="ADB Solution"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-            <Configurator />
-            {configsButton}
-          </>
-        )}
-        {layout === "vr" && <Configurator />}
-        <Routes>
-          {getRoutes(routes)}
-          {/* <Route path="*" element={<Navigate to="/dashboard" />} /> */}
-        </Routes>
-      </ThemeProvider>
-    </CacheProvider>
-  ) : (
+
+
+  return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
-      {layout === "dashboard" && (
+      {isAuth && layout === "dashboard" && (
         <>
           <Sidenav
             color={sidenavColor}
@@ -227,6 +196,7 @@ export default function App() {
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
+            UserRole={userRole}
           />
           <Configurator />
           {configsButton}
@@ -235,8 +205,11 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<NotPage/>} />
+        <Route path="*" element={<NotPage />} />
       </Routes>
     </ThemeProvider>
-  );
+  )
+
+
+
 }

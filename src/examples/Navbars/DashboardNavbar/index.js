@@ -53,6 +53,9 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
+import Swal from 'sweetalert2';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../redux/slices/auth';
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -60,6 +63,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode, sidenavColor } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const reduxDispath = useDispatch()
+
+  
 
   useEffect(() => {
     // Setting the navbar type
@@ -92,6 +98,21 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 
+  const onClickLogout = () => {
+    Swal.fire({
+      title: 'Вы правда хотите выйти?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Да, выйти',
+      cancelButtonText: 'Отмена'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        reduxDispath(logout());
+        window.localStorage.removeItem('token');
+      }
+    });
+  };
+  
   // Render the notifications menu
   const renderMenu = () => (
     <Menu
@@ -154,6 +175,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
               <MDButton
                 variant="gradient"
                 color='error'
+                onClick={onClickLogout}
                 // fullWidth
               >
                 Выход

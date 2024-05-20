@@ -47,7 +47,7 @@ import { fetchUsers, fetchDeleteUser } from '../../redux/actions/users';
 import Swal from 'sweetalert2';
 
 function SimpleDialog(props) {
-  const { onClose, selectedValue, open , formAct , user} = props;
+  const { onClose, selectedValue, open, formAct, user } = props;
 
 
   const handleClose = () => {
@@ -64,7 +64,7 @@ function SimpleDialog(props) {
       <DialogContent>
         <MDBox >
           <MDBox my={1}>
-            <MDInput fullWidth label="Логин" value={user.login}/>
+            <MDInput fullWidth label="Логин" value={user.login} />
           </MDBox>
           <MDBox my={1}>
             <MDInput fullWidth label="Имя" value={user.fullName} />
@@ -77,7 +77,7 @@ function SimpleDialog(props) {
                 id="demo-simple-select"
                 value={user.role}
                 label="Роль пользователя"
-                // onChange={12}
+              // onChange={12}
               >
                 <MenuItem value={1}>Главный админ</MenuItem>
                 <MenuItem value={2}>Модератор</MenuItem>
@@ -100,7 +100,7 @@ SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   selectedValue: PropTypes.string.isRequired,
-  formAct:PropTypes.string.isRequired,
+  formAct: PropTypes.string.isRequired,
   user: PropTypes.array.isRequired
 };
 
@@ -110,8 +110,8 @@ SimpleDialog.propTypes = {
 function Users() {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
-  const [formAct , setFormAct] = useState('')
-  const [userData , setUserData] = useState('')
+  const [formAct, setFormAct] = useState('')
+  const [userData, setUserData] = useState('')
   const { users } = useSelector(state => state.users);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
@@ -122,7 +122,12 @@ function Users() {
   const actUser = {
     login: ''
   }
-  
+
+
+  const reports = [
+    { id: '102_4', name: 'Единая налоговая декларация физического лица, осуществляющего предпринимательскую деятельность (01.01.2022 -) (FORM STI-102_4)' }
+  ]
+
 
 
   useEffect(() => {
@@ -181,7 +186,7 @@ function Users() {
     <DashboardLayout>
       <DashboardNavbar />
       <SimpleDialog
-        
+
         open={open}
         onClose={handleClose}
         formAct={formAct}
@@ -203,7 +208,7 @@ function Users() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h5" color="white">
-                  Декларации
+                    Декларации
                   </MDTypography>
                 </MDBox>
               </MDBox>
@@ -223,11 +228,11 @@ function Users() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {users.items.map((item, index) => (
-                      <TableRow key={index}>
+                    {reports.map((item, key) => (
+                      <TableRow key={key}>
                         <TableCell>
                           <MDTypography variant="h6" color="dark">
-                            {item.name}
+                          {item.name}
                           </MDTypography>
                         </TableCell>
                         <TableCell>
@@ -236,13 +241,16 @@ function Users() {
                             color="info"
                             size="small"
                             component={NavLink}
-                            to={`/declaration/${1}`}
-                            onClick={() => onEdit(item._id)}>
+                            to={`/declaration/${item.id}`}
+                           
+                          >
                             Заполнить
                           </MDButton>
                         </TableCell>
                       </TableRow>
                     ))}
+
+
                   </TableBody>
                 </Table>
               </MDBox>

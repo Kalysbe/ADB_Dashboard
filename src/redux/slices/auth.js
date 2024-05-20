@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { fetchAuth, fetchAuthMe , fetchRegister  } from '../actions/auth'
 
 const initialState = {
+  isAuth: false,
    data:null,
    status: 'loading'
 }
