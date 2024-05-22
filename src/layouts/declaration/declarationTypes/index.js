@@ -17,7 +17,6 @@ Coded by www.creative-tim.com
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
@@ -30,7 +29,6 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
-
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -42,12 +40,10 @@ import DialogContent from '@mui/material/DialogContent';
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
 
-import { fetchDeclarations } from '../../redux/actions/declarations';
+
+
 import Swal from 'sweetalert2';
-
 
 
 
@@ -59,15 +55,14 @@ function Users() {
   const [open, setOpen] = React.useState(false);
   const [formAct, setFormAct] = useState('')
   const [userData, setUserData] = useState('')
-  const { declarations } = useSelector(state => state.declarations);
+  const { users } = useSelector(state => state.users);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
 
   const actAdd = 'add'
   const actUpd = 'upd'
 
-
-
+ 
 
   const reports = [
     { id: '102_4', name: 'Единая налоговая декларация физического лица, осуществляющего предпринимательскую деятельность (01.01.2022 -) (FORM STI-102_4)' }
@@ -75,12 +70,10 @@ function Users() {
 
 
 
-  useEffect(() => {
-    dispatch(fetchDeclarations());
-  }, []);
+
 
   useEffect(() => {
-    dispatch(fetchDeclarations({ page, searchTerm }));
+
   }, [dispatch, page, searchTerm]);
 
   const handleSearchChange = (event) => {
@@ -88,68 +81,22 @@ function Users() {
     setPage(1);
   };
 
-  const handlePageChange = (newPage) => {
-    setPage(newPage);
-  };
-
-  const onDelete = (id) => {
-    Swal.fire({
-      title: 'Вы правда хотите удалить?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Да, удалить!',
-      cancelButtonText: 'Отмена',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(fetchDeleteUser(id)).then(() => {
-          Swal.fire('Успешно!', 'Запись удалена', 'success');
-        })
-          .catch((error) => {
-            MySwal.fire('Ошибка!', 'Не удалось удалить запись: ' + error.message, 'error');
-          });
-      }
-    });
-  };
 
   const onAdd = () => {
     setFormAct(actAdd)
     setOpen(true);
   };
 
-  const onEdit = (id) => {
-    setFormAct(actUpd)
-    setUserData(users.items.find(user => user._id == id))
-    setOpen(true);
-  }
 
   const handleClose = (value) => {
     setOpen(false);
   };
 
-  const status = (value) => {
-    switch (value) {
-      case 1:
-        return 'Сохранен';
-      case 2:
-        return 'На проверке';
-      case 3:
-        return 'Одобрен';
-      case 0:
-        return 'Отклонен';
-      default:
-        return 'foo';
-    }
-  }
-
-  const title = (value) => {
-    return reports.find(item => item.id == value ).name
-  }
-
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-
+   
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
@@ -166,18 +113,10 @@ function Users() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h5" color="white">
-                    Декларации
+                    Выберите декларацию
                   </MDTypography>
                 </MDBox>
-                <MDBox color="text" px={2}>
-                  <MDButton variant="gradient" color="info"
-                    component={NavLink}
-                    to={`/declaration/types`}>
-                    Создать
-                    <Icon sx={{ fontWeight: "bold" }}>add</Icon>
-
-                  </MDButton>
-                </MDBox>
+               
               </MDBox>
               <MDBox mx={2}>
                 <MDInput label="Поиск по декларациям"
@@ -185,49 +124,38 @@ function Users() {
                   onChange={handleSearchChange} fullWidth />
               </MDBox>
               <MDBox pt={3} mx={2} >
-
+                {/* <TableContainer>авы */}
                 <Table>
                   <TableHead style={{ display: 'table-header-group' }}>
                     <TableRow>
-                      <TableCell>От</TableCell>
-                      <TableCell>Название отчета</TableCell>
-                      <TableCell>Дата</TableCell>
-                      <TableCell>Статус</TableCell>
-
-
+                      <TableCell>Название</TableCell>
+                      <TableCell>Действие</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {declarations.items.map((item, index) => (
-                      <TableRow key={index}>
+                    {reports.map((item, key) => (
+                      <TableRow key={key}>
                         <TableCell>
                           <MDTypography variant="h6" color="dark">
-                            {item.user.fullName}
+                          {item.name}
                           </MDTypography>
                         </TableCell>
                         <TableCell>
-
-                          <Link to={`/declaration/102_4/${item._id}`} color="info">
-                            <MDTypography variant="body2" color="info">
-                              {title(item.code)}
-                            </MDTypography>
-                          </Link>
-
+                          <MDButton
+                            variant="outlined"
+                            color="info"
+                            size="small"
+                            component={NavLink}
+                            to={`/declaration/${item.id}`}
+                           
+                          >
+                            Заполнить
+                          </MDButton>
                         </TableCell>
-                        <TableCell>
-                          <MDTypography variant="h6" color="dark">
-                            {item.updatedAt}
-                          </MDTypography>
-                        </TableCell>
-                        <TableCell>
-                          <MDTypography variant="h6" color="dark">
-                            {status(item.status)}
-
-                          </MDTypography>
-                        </TableCell>
-
                       </TableRow>
                     ))}
+
+
                   </TableBody>
                 </Table>
               </MDBox>

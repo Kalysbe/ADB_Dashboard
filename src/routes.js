@@ -48,7 +48,7 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
 //dashboard
-
+import DeclarationTypes from "layouts/declaration/declarationTypes"
 import Form_102_4 from "layouts/declaration/102_4";
 
 import AddPost from "layouts/addPost";
@@ -91,29 +91,10 @@ const routes = [
     name: "Блог",
     key: "allposts",
     icon: <Icon fontSize="small">notifications</Icon>,
-    // route: "/allposts",
-    // component: <EditBlog />,
+    route: "/allposts",
+    component: <EditBlog />,
     role:[1],
-    collapse: [
-      {
 
-        name: "Расчет налогов",
-        key: "billing",
-        // icon: <Icon fontSize="small">receipt_long</Icon>,
-        route: "/billing",
-        component: <Billing />,
-        role:[1,2]
-      },
-      {
-      
-        name: "Декларации на проверку",
-        key: "notifications",
-        // icon: <Icon fontSize="small">notifications</Icon>,
-        route: "/notifications",
-        component: <Notifications />,
-        role:[1]
-      },
-    ]
   },
   {
     type: "collapse",
@@ -253,6 +234,14 @@ const routes = [
     role:[1]
   },
 
+  {
+    name: "Создание декларации",
+    key: "declaration_form",
+    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
+    route: "/declaration/types",
+    component: <DeclarationTypes />,
+    role:[1,2]
+  },
 
   {
     name: "Создание декларации",

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
-import { fetchDeclarations } from "../actions/declarations"
+import { fetchDeclarations, fetchAddDeclaration } from "../actions/declarations"
 
 
 export const fetchRemovePost = createAsyncThunk("posts/fetchRemovePost", async (id) => {
@@ -38,22 +38,18 @@ const declarationsSlice = createSlice({
           state.declarations.items = [];
           state.declarations.status = "error";
         });
-  
-      // Действия для получения тегов
-      // builder
-      //   .addCase(fetchTags.pending, (state) => {
-      //     state.tags.items = [];
-      //     state.tags.status = "loading";
-      //   })
-      //   .addCase(fetchTags.fulfilled, (state, action) => {
-      //     state.tags.items = action.payload;
-      //     state.tags.status = "loaded";
-      //   })
-      //   .addCase(fetchTags.rejected, (state) => {
-      //     state.tags.items = [];
-      //     state.tags.status = "error";
-      //   });
-  
+        builder
+        .addCase(fetchAddDeclaration.pending, (state) => {
+          state.status = "loading";
+        })
+        .addCase(fetchAddDeclaration.fulfilled, (state, action) => {
+          state.status = "loaded"; 
+          state.data = action.payload; 
+        })
+        .addCase(fetchAddDeclaration.rejected, (state) => {
+          state.status = "error"; 
+        });
+     
       // Действия для удаления поста
       builder.addCase(fetchRemovePost.pending, (state, action) => {
         const postIdToRemove = action.meta.arg;
