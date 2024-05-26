@@ -154,14 +154,14 @@ function Declarations() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h5" color="white">
-                    Декларации на проверку
+                   Клиенты
                   </MDTypography>
                 </MDBox>
                 <MDBox color="text" px={2}>
                   <MDButton variant="gradient" color="dark"
                     onClick={onAdd}>
                     <Icon sx={{ fontWeight: "bold" }}>add</Icon>
-                    Новый пользователь
+                    Новый клиент
                   </MDButton>
                 </MDBox>
               </MDBox>

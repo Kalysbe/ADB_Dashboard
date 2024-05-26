@@ -288,6 +288,8 @@ function Form() {
         }));
     };
 
+    
+
     const onSubmit = async () => {
         await dispatch(fetchAddDeclaration(formData))
    

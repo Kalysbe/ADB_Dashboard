@@ -107,7 +107,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Декларации на проверку",
+    name: "Клиенты",
     key: "notifications",
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/notifications",
