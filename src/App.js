@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { React, useState, useEffect, useMemo } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -88,6 +88,11 @@ import "./assets/css/post-172.css"
 import "./assets/css/core-block-supports.css"
 import "./assets/css/animations.min.css"
 export default function App() {
+  const navigate = useNavigate();
+  const dispath = useDispatch()
+  const isAuth = useSelector(selectIsAuth);
+  const data = useSelector(state => state.auth.data);
+  const userRole = data && data.role
   const [controller, dispatch] = useMaterialUIController();
   const {
     miniSidenav,
@@ -170,10 +175,7 @@ export default function App() {
       </Icon>
     </MDBox>
   );
-  const dispath = useDispatch()
-  const isAuth = useSelector(selectIsAuth);
-  const data = useSelector(state => state.auth.data);
-  const userRole = data && data.role
+
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -181,6 +183,17 @@ export default function App() {
     }
 
   }, [])
+
+  useEffect(() => {
+    if (isAuth) {
+      const lastVisitedPath = localStorage.getItem('lastVisitedPath');
+      if (lastVisitedPath) {
+        navigate(lastVisitedPath);
+      }
+    } else {
+      navigate('/authentication/sign-in');
+    }
+  }, [isAuth, navigate]);
 
 
 

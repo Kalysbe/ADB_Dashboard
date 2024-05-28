@@ -209,14 +209,14 @@ function Users() {
 
                           <Link to={`/declaration/102_4/${item._id}`} color="info">
                             <MDTypography variant="body2" color="info">
-                              {title(item.code)}
+                              {item.title}
                             </MDTypography>
                           </Link>
 
                         </TableCell>
                         <TableCell>
                           <MDTypography variant="h6" color="dark">
-                            {item.updatedAt}
+                            {item.createdAt}
                           </MDTypography>
                         </TableCell>
                         <TableCell>

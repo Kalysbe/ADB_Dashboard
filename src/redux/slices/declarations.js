@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
-import { fetchDeclarations, fetchAddDeclaration } from "../actions/declarations"
+import { fetchDeclarations,fetchDeclarationById, fetchAddDeclaration } from "../actions/declarations"
 
 
 export const fetchRemovePost = createAsyncThunk("posts/fetchRemovePost", async (id) => {
@@ -12,10 +12,10 @@ const initialState = {
         items: [],
         status: "loading"
     },
-    tags: {
-        items: [],
-        status: "loading"
-    }
+    declaration: {
+      data: {},
+      status: "loading"
+  },
 }
 
 const declarationsSlice = createSlice({
@@ -23,20 +23,31 @@ const declarationsSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-      // Действия для получения постов
       builder
         .addCase(fetchDeclarations.pending, (state) => {
           state.declarations.items = [];
           state.declarations.status = "loading";
         })
         .addCase(fetchDeclarations.fulfilled, (state, action) => {
-          console.log(action.payload,'payload')
           state.declarations.items = action.payload;
           state.declarations.status = "loaded";
         })
         .addCase(fetchDeclarations.rejected, (state) => {
           state.declarations.items = [];
           state.declarations.status = "error";
+        });
+        builder
+        .addCase(fetchDeclarationById.pending, (state) => {
+          state.declaration.data = {};
+          state.declaration.status = "loading";
+        })
+        .addCase(fetchDeclarationById.fulfilled, (state, action) => {
+          state.declaration.data = action.payload;
+          state.declaration.status = "loaded";
+        })
+        .addCase(fetchDeclarationById.rejected, (state) => {
+          state.declaration.data = {};
+          state.declaration.status = "error";
         });
         builder
         .addCase(fetchAddDeclaration.pending, (state) => {

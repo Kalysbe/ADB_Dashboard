@@ -1055,21 +1055,21 @@ textarea {
   border-radius: 0;
 }
 
-input[type=checkbox] {
+/* input[type=checkbox] {
   visibility: hidden;
   opacity: 0;
   vertical-align: middle;
   width: 0;
   height: 0;
   display: none;
-}
-input[type=checkbox]:checked ~ label:before {
+} */
+/* input[type=checkbox]:checked ~ label:before {
   content: "\f00c";
   color: var(--white-color);
   background-color: var(--theme-color);
   border-color: var(--theme-color);
-}
-input[type=checkbox] ~ label {
+} */
+/* input[type=checkbox] ~ label {
   position: relative;
   padding-left: 30px;
   cursor: pointer;
@@ -1089,7 +1089,7 @@ input[type=checkbox] ~ label:before {
   line-height: 18px;
   text-align: center;
   font-size: 12px;
-}
+} */
 
 input[type=radio] {
   visibility: hidden;
