@@ -11,6 +11,7 @@ import Checkbox from '@mui/material/Checkbox';
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
+import CircularProgress from '@mui/material/CircularProgress';
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -20,14 +21,6 @@ import { fetchDeclarationById, fetchAddDeclaration } from '../../../redux/action
 
 
 function Form() {
-    const { id } = useParams();
-    const dispatch = useDispatch();
-    const dataaa = useSelector(state => state.declaration);
-
-
-    const isEditing = Boolean(id);
-
-
     const [formData, setFormData] = useState({
         "Specified": '',
         "Model_Specified": '',
@@ -277,15 +270,31 @@ function Form() {
         "__RequestVerificationToken": ""
     })
 
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { data, status } = useSelector(state => state.declarations.declaration);
 
-        useEffect(() => {
+    console.log(status)
+    console.log(data)
+    useEffect(() => {
+        if (id) {
             const fetchData = async () => {
                 await dispatch(fetchDeclarationById(id));
             }
             fetchData();
-        }, [dispatch, isEditing]);
+        }
+    }, [id]);
 
-        console.log(dataaa)
+    useEffect(() => {
+        // Update form data when dataaa changes
+        if (data && data.content) {
+            console.log(data,'fata')
+            setFormData(data.content);
+        }
+    }, [data.content]);
+
+    console.log(formData)
+
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -310,7 +319,9 @@ function Form() {
             <DashboardNavbar />
             <MDBox pt={6} pb={3}>
                 <Card>
-
+                    {status === "loading" ? (  <MDBox py='30px' sx={{ display: 'flex',justifyContent:'center' }}>
+                        <CircularProgress color='info' size='80px' />
+                    </MDBox>) : (
                     <div className="main-content-wrap sidenav-open d-flex flex-column pb-5">
                         <div className="main-content">
 
@@ -430,7 +441,7 @@ function Form() {
                                                     // readOnly=""
                                                     type="text"
                                                     id="Name"
-                                                />dsa
+                                                />
                                             </div>
                                         </div>
                                         <div className="form-group col-md-3">
@@ -806,7 +817,7 @@ function Form() {
                                         </div>
                                     </div>
                                     <div className="my-4 p-2 pt-4 rounded-20px bg-white">
-                                        1<input type="hidden" value={formData["Year"]} onChange={handleChange} id="Year" />
+                                        {/* 1<input type="hidden" value={formData["Year"]} onChange={handleChange} id="Year" />
                                         <input type="hidden" value={formData["Year"]} onChange={handleChange} id="Year" />
 
 
@@ -823,7 +834,7 @@ function Form() {
 
 
                                         1<input type="hidden" value={formData["PeriodDate"]} onChange={handleChange} id="PeriodDate" />
-                                        <input type="hidden" value={formData["PeriodDate"]} onChange={handleChange} id="PeriodDate" />
+                                        <input type="hidden" value={formData["PeriodDate"]} onChange={handleChange} id="PeriodDate" /> */}
 
 
                                         <div className="col-12 d-flex mb-5 align-items-center">
@@ -2162,11 +2173,11 @@ function Form() {
                                                             <input
                                                                 type="checkbox"
                                                                 // id="STI101X1"
-                                                                checked={true}
 
-                                                            // name="STI101X1"
-                                                            // checked={formData.STI101X1}
-                                                            // onChange={handleChange}
+
+                                                                name="STI101X1"
+                                                                checked={formData.STI101X1}
+                                                                onChange={handleChange}
 
                                                             />
                                                             <label
@@ -8782,7 +8793,9 @@ function Form() {
 
                             </div>
                         </div>
-                    </div>
+                    </div>)}
+                  
+                    
                 </Card >
 
             </MDBox >
