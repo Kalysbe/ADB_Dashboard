@@ -41,7 +41,7 @@ import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import Declaration from "layouts/declaration";
 import EditBlog from "layouts/Blog"
-import Notifications from "layouts/notifications";
+import Notifications from "layouts/clients";
 import Profile from "layouts/profile";
 import Users from "layouts/users";
 import SignIn from "layouts/authentication/sign-in";
@@ -108,9 +108,9 @@ const routes = [
   {
     type: "collapse",
     name: "Клиенты",
-    key: "notifications",
+    key: "clients",
     icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
+    route: "/clients",
     component: <Notifications />,
     role:[1]
   },

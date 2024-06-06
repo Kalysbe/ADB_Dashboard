@@ -175,8 +175,8 @@ function Declarations() {
                 <Table>
                   <TableHead style={{ display: 'table-header-group' }}>
                     <TableRow>
-                      <TableCell>От</TableCell>
-                      <TableCell>Название отчета</TableCell>
+                      <TableCell>Название</TableCell>
+                      <TableCell> отчета</TableCell>
                       <TableCell>Дата</TableCell>
                       <TableCell>Статус</TableCell>
 

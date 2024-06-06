@@ -82,6 +82,7 @@ function Basic() {
   }
 
   if (isAuth) {
+    console.log(isAuth,'auth')
     return <Navigate to='/dashboard' />
   }
 
