@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectIsAuth } from '../../../redux/slices/auth';
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
-
+import { TextField, Button, Select, MenuItem, FormControl, InputLabel, Grid, Typography } from '@mui/material';
 // @mui material components
 import Container from "@mui/material/Container";
 import Icon from "@mui/material/Icon";
@@ -35,11 +35,13 @@ import MDButton from "components/MDButton";
 // Material Dashboard 2 React example components
 import DefaultNavbarLink from "examples/Navbars/DefaultNavbar/DefaultNavbarLink";
 import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMobile";
-
+import { useTranslation } from 'react-i18next';
 // Material Dashboard 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 
 import logo from "assets/images/logo.png"
+import US from "assets/images/icons/flags/US.png"
+import RU from "assets/images/icons/flags/RU.png"
 
 // Material Dashboard 2 React context
 import { useMaterialUIController } from "context";
@@ -66,6 +68,8 @@ function DefaultNavbar({ transparent, light, action }) {
       }
     }
 
+
+
     /** 
      The event listener that's calling the displayMobileNavbar function when 
      resizing the window.
@@ -79,6 +83,13 @@ function DefaultNavbar({ transparent, light, action }) {
     return () => window.removeEventListener("resize", displayMobileNavbar);
   }, []);
 
+  const { t, i18n } = useTranslation();
+
+
+  const changeLanguage = (e) => {
+    const selectedLanguage = e.target.value;
+    i18n.changeLanguage(selectedLanguage);
+  };
 
   const onClickLogout = () => {
     if (window.confirm('Вы правда хотите выйти?')) {
@@ -160,6 +171,28 @@ function DefaultNavbar({ transparent, light, action }) {
                                   </div>
                                 </div>
                               </div>
+
+                             
+
+                              <FormControl >
+
+  <Select
+    labelId="demo-simple-select-label"
+    id="demo-simple-select"
+
+    onChange={changeLanguage} 
+    value={i18n.language}
+  >
+    <MenuItem value="en" sx={{display:'flex',backgroundColor:'#fff'}}>
+     
+          English
+        </MenuItem>
+        <MenuItem value="ru">
+      
+          Русский
+        </MenuItem>
+  </Select>
+</FormControl>
                             </div>
                           </Container>
                         </section>

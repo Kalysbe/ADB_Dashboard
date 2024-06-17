@@ -37,7 +37,8 @@ import theme from "assets/theme";
 import themeDark from "assets/theme-dark";
 import themeDarkRTL from "assets/theme-dark/theme-rtl";
 
-
+import { useTranslation } from 'react-i18next';
+import './i18n';
 
 // Material Dashboard 2 React routes
 import routes from "routes";
@@ -107,7 +108,7 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
 
-
+  const { t, i18n } = useTranslation();
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {

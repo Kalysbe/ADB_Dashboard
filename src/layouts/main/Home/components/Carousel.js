@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
+import "assets/js/layerslider.utils"
 
 export const Carousel = (props) => {
+  const { t, i18n } = useTranslation();
+
 
   _initLayerSlider('#layerslider_1_lto8j8x0zbu3', 
   { createdWith: '7.1.3', sliderVersion: '7.9.1', allowFullscreen: true, startInViewport: false, skin: 'v6', sliderFadeInDuration: 350, navPrevNext: false, hoverPrevNext: false, navStartStop: false, navButtons: false, showCircleTimer: false, useSrcset: true, skinsPath: 'https://wordpress.vecurosoft.com/techbiz/wp-content/plugins/LayerSlider/assets/static/layerslider/skins/', performanceMode: true })
@@ -27,7 +31,7 @@ export const Carousel = (props) => {
                         className="ls-l ls-text-layer" data-ls="offsetxin:-800;offsetyin:-800;durationin:1500;delayin:1300;easingin:easeOutQuint;rotatein:43.46;offsetxout:1200;offsetyout:1200;durationout:8000;startatout:slidechangeonly + 3000;easingout:easeOutQuint;scaleyout:5;bgcolorout:transparent;colorout:transparent;rotation:43.46;">
                         </div>
                         <p style={{ fontSize: '18px', fontWeight: 600, fontFamily: 'Exo', color: '#ffffff', borderWidth: '2px 2px 2px 2px', borderColor: '#ffffff', borderRadius: '5px 5px 5px 5px', paddingTop: '9px', paddingRight: '23.5px', paddingLeft: '23.5px', top: '220px', left: '345PX', paddingBottom: '9px' }} className="ls-l ls-hide-tablet ls-hide-phone ls-text-layer" data-ls="offsetxin:300;durationin:1500;delayin:400;easingin:easeOutQuint;offsetxout:300;durationout:1500;easingout:easeOutQuint;">
-                          У НАС ЕСТЬ ЛУЧШИЕ СПЕЦИАЛИСТЫ</p>
+                     У НАС ЕСТЬ ЛУЧШИЕ СПЕЦИАЛИСТЫ</p>
                         <h1 style={{ top: '292px', left: '345px', fontWeight: 700, backgroundSize: 'inherit', backgroundPosition: 'inherit', fontSize: '60px', color: '#ffffff', fontFamily: 'Exo' }} className="ls-l ls-hide-tablet ls-hide-phone ls-text-layer" data-ls="offsetxin:-200;durationin:1500;easingin:easeOutQuint;offsetxout:-100;durationout:1500;easingout:easeOutQuint;position:relative;">
                           ЛУЧШИЕ АУДИТ УСЛУГИ</h1>
                         <h1 style={{ top: '378px', left: '345px', fontWeight: 700, backgroundSize: 'inherit', backgroundPosition: 'inherit', fontSize: '60px', fontFamily: 'Exo', color: '#ffffff', backgroundColor: 'transparent', cursor: 'auto' }} className="ls-l ls-hide-tablet ls-hide-phone ls-text-layer" data-ls="offsetxin:-200;durationin:1500;delayin:200;easingin:easeOutQuint;offsetxout:-100;durationout:1500;easingout:easeOutQuint;">
@@ -97,6 +101,8 @@ export const Carousel = (props) => {
                           </div>
                         </div>
                       </div>
+
+                      
                       <div className="ls-slide" data-ls="duration:12000;transition2d:5;kenburnszoom:in;kenburnsscale:1.1;">
                         <img loading="lazy" decoding="async" width={1920} height={850} src="images/hero-1-3.jpg" className="ls-bg" alt="" srcSet="images/hero-1-3.jpg 1920w, images/hero-1-3-600x266.jpg 600w, images/hero-1-3-300x133.jpg 300w, images/hero-1-3-1024x453.jpg 1024w, images/hero-1-3-768x340.jpg 768w, images/hero-1-3-1536x680.jpg 1536w" sizes="(max-width: 1920px) 100vw, 1920px" />
                         <div style={{ width: '300px', height: '1558px', backgroundColor: 'rgb(204, 177, 46,.5)', top: '-473px', left: '51px' }} className="ls-l ls-text-layer" data-ls="offsetxin:-800;offsetyin:-800;durationin:1700;delayin:1200;easingin:easeOutQuint;rotatein:43.46;offsetxout:1200;offsetyout:1200;durationout:8000;startatout:slidechangeonly + 3000;easingout:easeOutQuint;scaleyout:5;rotation:43.46;">

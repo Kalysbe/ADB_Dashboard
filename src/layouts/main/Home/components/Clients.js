@@ -13,7 +13,6 @@ import 'swiper/css/pagination';
 // import required modules
 import { FreeMode, Pagination, Navigation } from 'swiper/modules';
 
-SwiperCore.use([Navigation]);
 
 export const Clients = (props) => {
     const itemsReview = [

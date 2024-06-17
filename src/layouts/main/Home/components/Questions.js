@@ -23,9 +23,9 @@ export const Questions = (props) => {
                             <div className="elementor-element elementor-element-4ab0caf elementor-widget elementor-widget-techbizfaqarea" data-id="4ab0caf" data-element_type="widget">
                               <div className="elementor-widget-container">
                                 <section className="faq-wrap1">
-                                  <div className="faq-shape1" data-bg-src="./images/faq-bg-1-1.jpg">
+                                  <div className="faq-shape1" style={{backgroundImage:'url(./images/faq-bg-1-1.jpg)'}} >
                                   </div>
-                                  <div className="faq-shape2" data-bg-src="./images/faq-bg-1-2.jpg">
+                                  <div className="faq-shape2" style={{backgroundImage:'url(./images/faq-bg-1-2.jpg)'}} >
                                   </div>
                                   <div className="container">
                                     <div className="row gx-60">
