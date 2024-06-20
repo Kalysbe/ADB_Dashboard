@@ -63,33 +63,49 @@ const EditEmitent = () => {
     }));
   };
 
+
   const handleSubmit = async () => {
     setLoading(true);
+    let response = ''
     try {
-      if (isEditing) {
-        await dispatch(fetchUpdateClient({ id, data: formData }));
-      } else {
-        await dispatch(fetchAddClient(formData));
-      }
+        if (!isEditing) {
+           response = await dispatch(fetchAddClient(formData));
+        } else {
+           response = await dispatch(fetchUpdateClient({ id, formData }));
+        }
 
-      Swal.fire({
-        title: 'Успешно!',
-        text: 'Данные успешно отправлены',
-        icon: 'success',
-        confirmButtonText: 'Ок',
-      });
+    
+        if (response.error) {
+            throw new Error(response.error);
+        }
+        
+        console.log(response,'respons')
+
+        const newId = response.payload._id; 
+
+        Swal.fire({
+            title: 'Успешно!',
+            text: 'Данные успешно отправлены',
+            icon: 'success',
+            confirmButtonText: 'Ок',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                navigate(`/client/${newId}`) 
+            }
+        });
     } catch (error) {
-      console.error('Ошибка при отправке данных:', error);
-      Swal.fire({
-        title: 'Ошибка!',
-        text: 'Произошла ошибка при отправке данных на сервер',
-        icon: 'error',
-        confirmButtonText: 'Ок',
-      });
+        console.error('Ошибка при отправке данных:', error);
+        Swal.fire({
+            title: 'Ошибка!',
+            text: 'Произошла ошибка при отправке данных на сервер',
+            icon: 'error',
+            confirmButtonText: 'Ок',
+        });
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+    
+};
   return (
     <DashboardLayout>
       <DashboardNavbar />

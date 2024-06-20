@@ -21,14 +21,13 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 import { CardContent, Table, TableContainer, TableHead, TableBody, TableRow, TableCell, TablePagination, TextField, Button } from '@mui/material';
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink ,Link} from "react-router-dom";
 
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
-import Link from '@mui/material/Link';
 import MDInput from "components/MDInput";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -166,8 +165,8 @@ function Declarations() {
                 </MDBox>
                 <MDBox color="text" px={2}>
                   <MDButton variant="gradient" color="dark"
-                        component={NavLink}
-                        to={`/client/add`}>
+                    component={NavLink}
+                    to={`/client/add`}>
                     <Icon sx={{ fontWeight: "bold" }}>add</Icon>
                     Новый клиент
                   </MDButton>
@@ -195,9 +194,13 @@ function Declarations() {
                         {ClientList.map((item, index) => (
                           <TableRow key={index}>
                             <TableCell>
-                              <MDTypography variant="h6" color="dark">
-                                {item.name}
-                              </MDTypography>
+
+                              {/* <Link to={`/client/${item._id}`} color="info"> */}
+                                <MDTypography variant="body2" color="info" component={NavLink} to={`/client/${item._id}`} >
+                                  {item.name}
+                                </MDTypography>
+                              {/* </Link> */}
+
                             </TableCell>
                             <TableCell>
                               <MDTypography variant="h6" color="dark">

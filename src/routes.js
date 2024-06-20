@@ -59,6 +59,7 @@ import FullPost  from "layouts/main/FullPost";
 import Contacts from "layouts/main/Contacts"
 
 //client
+import ClientDetail from "pages/Client/Detail"
 import EditClient from "pages/Client/Edit"
 
 import TaxCar from "layouts/main/Taxes/TaxCar";
@@ -264,6 +265,13 @@ const routes = [
   },
 
   //client
+  {
+    name: "Профиль клиента",
+    key: "client_add",
+    route: "/client/:id",
+    component: <ClientDetail />,
+    role:[1,2]
+  },
   {
     name: "Создание клиента",
     key: "client_add",
