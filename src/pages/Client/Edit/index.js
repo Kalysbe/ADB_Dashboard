@@ -15,8 +15,10 @@ import { selectIsAuth } from '../../../redux/slices/auth';
 import { fetchClientById, fetchAddClient, fetchUpdateClient } from '../../../redux/actions/client';
 
 const formConfig = [
-  { key: "name", label: "Имя клиента", type: "text" },
-
+  { key: 'label', label: 'ФИО', type: "text" },
+  { key: 'typeBusiness', label: 'Вид бизнеса', type: "list", option:'' },
+  { key: 'label', label: 'Налоговая ставка', type: "number" },
+  
 ];
 
 const EditEmitent = () => {
@@ -146,7 +148,7 @@ const EditEmitent = () => {
             <MDButton
               color="error"
               component={NavLink}
-              to={isEditing ? `/emitent/personalData/${id}` : '/emitents'}
+              to={isEditing ? `/client/${id}` : '/clients'}
               style={{ marginRight: '12px' }}
             >
               Назад
