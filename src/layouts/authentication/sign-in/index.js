@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from "react-router-dom";
+import { Navigate , useNavigate} from "react-router-dom";
 import { useState } from "react";
 
 // react-router-dom components
@@ -49,7 +49,7 @@ import { selectIsAuth } from "../../../redux/slices/auth";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
-
+  const navigate = useNavigate();
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   const isAuth = useSelector(selectIsAuth)
@@ -82,8 +82,7 @@ function Basic() {
   }
 
   if (isAuth) {
-    console.log(isAuth,'auth')
-    return <Navigate to='/dashboard' />
+    navigate('/dashboard');
   }
 
 

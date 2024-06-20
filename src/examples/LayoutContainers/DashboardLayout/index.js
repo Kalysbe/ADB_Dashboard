@@ -40,9 +40,7 @@ function DashboardLayout({ children }) {
   const navigate = useNavigate();
   const isAuth = useSelector(selectIsAuth);
 
-  if (!window.localStorage.getItem("token") || !isAuth) {
-    return <Navigate to="/authentication/sign-in" />;
-  }
+
 
   return (
     <MDBox

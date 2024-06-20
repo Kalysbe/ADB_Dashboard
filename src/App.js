@@ -185,15 +185,21 @@ export default function App() {
 
   }, [])
 
+  console.log(layout)
+
   useEffect(() => {
-    if (isAuth) {
+  if (layout === "dashboard" && !window.localStorage.getItem("token") || !isAuth) {
+    navigate('/authentication/sign-in');
+  }
+}, [layout])
+
+  useEffect(() => {
+
       const lastVisitedPath = localStorage.getItem('lastVisitedPath');
       if (lastVisitedPath) {
         navigate(lastVisitedPath);
-      }
-    } else {
-      navigate('/authentication/sign-in');
-    }
+      } 
+  
   }, [isAuth, navigate]);
 
 

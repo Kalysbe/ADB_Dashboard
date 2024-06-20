@@ -60,7 +60,7 @@ function BasicLayout({ children }) {
 
       {children}
       
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+      {/* <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
         <BottomNavigation sx={{ width: 500 }} showLabels value={value} onChange={handleChange}>
           <BottomNavigationAction
             label="Recents"
@@ -81,7 +81,7 @@ function BasicLayout({ children }) {
           />
           <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
         </BottomNavigation>
-      </Paper>
+      </Paper> */}
       <Footer light />
     </PageLayout>
   );

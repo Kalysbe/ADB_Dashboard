@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
-import { CardContent, Table, TableContainer, TableHead, TableBody, TableRow, TableCell, TextField, Button } from '@mui/material';
+import { CardContent, Table, TableContainer, TableHead, TableBody, TableRow, TableCell, TablePagination, TextField, Button } from '@mui/material';
 import { useLocation, NavLink } from "react-router-dom";
 
 
@@ -41,10 +41,11 @@ import DialogContent from '@mui/material/DialogContent';
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import CircularProgress from '@mui/material/CircularProgress';
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
-import { fetchDeclarations } from '../../redux/actions/declarations';
+import { fetchClients, fetchDeleteClient } from '../../redux/actions/client';
 import Swal from 'sweetalert2';
 
 
@@ -63,12 +64,17 @@ function Declarations() {
   const [open, setOpen] = React.useState(false);
   const [formAct, setFormAct] = useState(actUser)
   const [userData, setUserData] = useState('')
-  const { declarations } = useSelector(state => state.declarations);
+  const { items, status } = useSelector(state => state.client.clients);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
 
 
-  console.log(declarations)
+  const ClientList = items
+  const LoaderStatus = status
+
+
+  console.log(ClientList.length)
+
 
   const actAdd = 'add'
   const actUpd = 'upd'
@@ -78,7 +84,7 @@ function Declarations() {
 
 
   useEffect(() => {
-    dispatch(fetchDeclarations());
+    dispatch(fetchClients());
   }, []);
 
 
@@ -100,7 +106,7 @@ function Declarations() {
       cancelButtonText: 'Отмена',
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(fetchDeleteUser(id)).then(() => {
+        dispatch(fetchDeleteClient(id)).then(() => {
           Swal.fire('Успешно!', 'Запись удалена', 'success');
         })
           .catch((error) => {
@@ -142,6 +148,7 @@ function Declarations() {
         <Grid container spacing={6}>
           <Grid item xs={12}>
             <Card>
+
               <MDBox display="flex" justifyContent="space-between" alignItems="center" py={1}>
                 <MDBox
                   mx={2}
@@ -154,12 +161,13 @@ function Declarations() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h5" color="white">
-                   Клиенты
+                    Клиенты
                   </MDTypography>
                 </MDBox>
                 <MDBox color="text" px={2}>
                   <MDButton variant="gradient" color="dark"
-                    onClick={onAdd}>
+                        component={NavLink}
+                        to={`/client/add`}>
                     <Icon sx={{ fontWeight: "bold" }}>add</Icon>
                     Новый клиент
                   </MDButton>
@@ -170,52 +178,56 @@ function Declarations() {
                   value={searchTerm}
                   onChange={handleSearchChange} fullWidth />
               </MDBox>
-              <MDBox pt={3} mx={2} >
-                {/* <TableContainer>авы */}
-                <Table>
-                  <TableHead style={{ display: 'table-header-group' }}>
-                    <TableRow>
-                      <TableCell>Название</TableCell>
-                      <TableCell> отчета</TableCell>
-                      <TableCell>Дата</TableCell>
-                      <TableCell>Статус</TableCell>
-
-
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {declarations.items.map((item, index) => (
-                      <TableRow key={index}>
-                        <TableCell>
-                          <MDTypography variant="h6" color="dark">
-                            {item.user.fullName}
-                          </MDTypography>
-                        </TableCell>
-                        <TableCell>
-
-                          <Link href={`/declaration/102_4/${item._id}`} color="info">
-                            <MDTypography variant="body2" color="info">
-                              {item.title}
-                            </MDTypography>
-                          </Link>
-
-                        </TableCell>
-                        <TableCell>
-                          <MDTypography variant="h6" color="dark">
-                            {item.updatedAt}
-                          </MDTypography>
-                        </TableCell>
-                        <TableCell>
-                          <MDTypography variant="h6" color="dark">
-                            {item.status}
-                          </MDTypography>
-                        </TableCell>
-
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </MDBox>
+              {LoaderStatus === "loading" ? (
+                <MDBox py='30px' sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <CircularProgress color='info' size='60px' />
+                </MDBox>) : ClientList.length ? (
+                  <MDBox pt={3} mx={2} >
+                    <Table>
+                      <TableHead style={{ display: 'table-header-group' }}>
+                        <TableRow>
+                          <TableCell>Имя</TableCell>
+                          <TableCell>Тип</TableCell>
+                          <TableCell>Действия</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {ClientList.map((item, index) => (
+                          <TableRow key={index}>
+                            <TableCell>
+                              <MDTypography variant="h6" color="dark">
+                                {item.name}
+                              </MDTypography>
+                            </TableCell>
+                            <TableCell>
+                              <MDTypography variant="h6" color="dark">
+                                ИП
+                              </MDTypography>
+                            </TableCell>
+                            <TableCell>
+                              <MDButton variant="outlined" color="error" size="small" style={{ marginLeft: '8px' }} onClick={() => onDelete(item._id)}>
+                                Удалить
+                              </MDButton>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                    {/* <TablePagination
+                      component="div"
+                      count={filteredRows.length}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      rowsPerPage={rowsPerPage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                      rowsPerPageOptions={[5, 10, 25]}
+                    /> */}
+                  </MDBox>
+                ) : (
+                <MDBox pt={3} mx={2} >
+                  Пусто
+                </MDBox>
+              )}
             </Card>
           </Grid>
         </Grid>

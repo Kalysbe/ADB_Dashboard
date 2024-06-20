@@ -328,7 +328,8 @@ function Form() {
             <DashboardNavbar />
             <MDBox pt={6} pb={3}>
                 <Card>
-                    {status === "loading" && id ? (<MDBox py='30px' sx={{ display: 'flex', justifyContent: 'center' }}>
+                    {status === "loading" && id ? (
+                        <MDBox py='30px' sx={{ display: 'flex', justifyContent: 'center' }}>
                         <CircularProgress color='info' size='80px' />
                     </MDBox>) : (
                         <div className="main-content-wrap sidenav-open d-flex flex-column pb-5">

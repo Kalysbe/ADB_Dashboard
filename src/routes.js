@@ -58,6 +58,9 @@ import Blog from "layouts/main/Blog";
 import FullPost  from "layouts/main/FullPost";
 import Contacts from "layouts/main/Contacts"
 
+//client
+import EditClient from "pages/Client/Edit"
+
 import TaxCar from "layouts/main/Taxes/TaxCar";
 import TaxHome from "layouts/main/Taxes/TaxHome";
 import TaxNoHome from "layouts/main/Taxes/TaxNoHome";
@@ -233,7 +236,7 @@ const routes = [
     component: <FullPost />,
     role:[1]
   },
-
+//declaration
   {
     name: "Создание декларации",
     key: "declaration_form",
@@ -257,6 +260,22 @@ const routes = [
     icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
     route: "/declaration/102_4/:id",
     component: <Form_102_4 />,
+    role:[1,2]
+  },
+
+  //client
+  {
+    name: "Создание клиента",
+    key: "client_add",
+    route: "/client/add",
+    component: <EditClient />,
+    role:[1,2]
+  },
+  {
+    name: "Редактирование клиента",
+    key: "client_edit",
+    route: "/client/:id/edit",
+    component: <EditClient />,
     role:[1,2]
   },
 ];
