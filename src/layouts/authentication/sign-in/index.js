@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import React from "react";
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate , useNavigate} from "react-router-dom";
 import { useState } from "react";
@@ -48,11 +48,9 @@ import { fetchAuth,  } from "../../../redux/actions/auth";
 import { selectIsAuth } from "../../../redux/slices/auth";
 
 function Basic() {
-  const [rememberMe, setRememberMe] = useState(false);
+  let isAuth = false
   const navigate = useNavigate();
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
-  const isAuth = useSelector(selectIsAuth)
+  isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch()
   const {
     register,
@@ -65,25 +63,23 @@ function Basic() {
       mode: 'onChange'
     })
 
-
   const onSubmit = async (values) => {
     const data = await dispatch(fetchAuth(values))
-
     if (!data.payload) {
       return alert('Не удалось авторизоваться')
     }
-
     if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token)
     } else {
       alert('Не удалось авторизоваться')
     }
-
   }
-
-  if (isAuth) {
-    navigate('/dashboard');
-  }
+  console.log(isAuth)
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/dashboard');
+    }
+  }, [isAuth]);
 
 
   return (
