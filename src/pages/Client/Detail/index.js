@@ -13,7 +13,15 @@ import { fetchClientById } from '../../../redux/actions/client';
 
 
 const formData = [
-    { key: 'name', name: 'Имя' },
+    { key: 'DistrictAddress', name: 'Область, Город/Область. район, Село' },
+    { key: 'Email', name: 'Адрес электронной почты' },
+    { key: 'LegalFormCode', name: 'Вид деятельности' },
+    { key: 'Name', name: 'Наименование' },
+    { key: 'PassportCountry', name: 'Страна выдачи' },
+    { key: 'PassportData', name: 'Серия и № Паспорта' },
+    { key: 'PhoneNumber', name: 'Телефон(Дом.Раб.)' },
+    { key: 'RayonCode', name: 'Код УГНС' },
+    { key: 'RayonName', name: 'Наименование района' }
 
 ]
 
@@ -83,7 +91,7 @@ function Basic() {
                             size="small"
                             style={{ marginRight: '12px' }}
                             component={NavLink}
-                            to={`/emitent/${id}/edit`}
+                            to={`/client/${id}/edit`}
                         >
                             Редактировать
                         </MDButton>
