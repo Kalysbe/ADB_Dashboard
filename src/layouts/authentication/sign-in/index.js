@@ -76,7 +76,9 @@ function Basic() {
   }
   console.log(isAuth)
   useEffect(() => {
+
     if (isAuth) {
+      console.log(1212)
       navigate('/dashboard');
     }
   }, [isAuth]);

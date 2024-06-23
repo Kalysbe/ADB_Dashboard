@@ -219,7 +219,7 @@ export default function App() {
             UserRole={userRole}
           />
           <Configurator />
-          {configsButton}
+          {/* {configsButton} */}
         </>
       )}
       {layout === "vr" && <Configurator />}

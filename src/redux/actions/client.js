@@ -17,8 +17,8 @@ export const fetchAddClient = createAsyncThunk("clients/fetchAddClient", async (
     return response.data;
 })
 
-export const fetchUpdateClient = createAsyncThunk("clients/fetchUpdateClient", async (data) => {
-    const response = await axios.put("/clients", data);
+export const fetchUpdateClient = createAsyncThunk("clients/fetchUpdateClient", async ({id, data,  }) => {
+    const response = await axios.put(`/clients/${id}`, data);
     return response.data;
 })
 

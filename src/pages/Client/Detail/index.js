@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, NavLink, useParams } from "react-router-dom";
-import { Grid, Card, Container, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import { Grid, Card, Container, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
@@ -11,17 +11,14 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { fetchClientById } from '../../../redux/actions/client';
 
+import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+
 
 const formData = [
-    { key: 'DistrictAddress', name: 'Область, Город/Область. район, Село' },
-    { key: 'Email', name: 'Адрес электронной почты' },
-    { key: 'LegalFormCode', name: 'Вид деятельности' },
-    { key: 'Name', name: 'Наименование' },
-    { key: 'PassportCountry', name: 'Страна выдачи' },
-    { key: 'PassportData', name: 'Серия и № Паспорта' },
-    { key: 'PhoneNumber', name: 'Телефон(Дом.Раб.)' },
-    { key: 'RayonCode', name: 'Код УГНС' },
-    { key: 'RayonName', name: 'Наименование района' }
+    { key: 'name', name: 'ФИО:' },
+    { key: 'typeBusiness', name: 'Вид занятности:' },
+    { key: 'tax', name: 'Ставка налога (%):' },
+
 
 ]
 
@@ -31,16 +28,26 @@ function Basic() {
     const emitent = useSelector(state => state.client.client);
 
 
+
     const isEmitentLoading = emitent.status === 'loading';
     const emitentData = emitent.data;
 
 
+
+
     useEffect(() => {
         dispatch(fetchClientById(id))
-      }, [id]);
+    }, [id]);
+
+    useEffect(() => {
+        if (emitentData.finance) {
+            setYears(emitentData.finance);
+        }
+    }, [emitentData.finance]);
 
 
-    console.log(emitentData)
+    const [years, setYears] = useState({});
+
 
     return (
         <DashboardLayout>
@@ -59,7 +66,7 @@ function Basic() {
                             coloredShadow="info"
                         >
                             <MDTypography variant="h5" color="white">
-                               Профиль клиента
+                                Профиль клиента
                             </MDTypography>
                         </MDBox>
                     </MDBox>
@@ -84,6 +91,97 @@ function Basic() {
                             </TableBody>
                         </Table>
                     </MDBox>
+
+                    <MDBox px={3} mt={2}>
+                        <MDTypography variant="h4" gutterBottom>Финансовые данные клиента</MDTypography>
+                        <Grid container spacing={3} mt={3}>
+                            <Grid item xs={12} md={6} lg={3}>
+                                <MDBox mb={1.5}>
+                                    <ComplexStatisticsCard
+                                        icon="leaderboard"
+                                        title="Доходы"
+                                        count="2,300"
+                                    />
+                                </MDBox>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={3}>
+                                <MDBox mb={1.5}>
+                                    <ComplexStatisticsCard
+                                        color="info"
+                                        icon="weekend"
+                                        title="Налог"
+                                        count={281}
+                                    />
+                                </MDBox>
+                            </Grid>
+
+                            <Grid item xs={12} md={6} lg={3}>
+                                <MDBox mb={1.5}>
+                                    <ComplexStatisticsCard
+                                        color="info"
+                                        icon="money"
+                                        title="Чистая прибыль"
+                                        count="+91"
+                                    
+                                    />
+                                </MDBox>
+                            </Grid>
+                            
+                            <Grid item xs={12} md={6} lg={3}>
+                                <MDBox mb={1.5}>
+                                    <ComplexStatisticsCard
+                                        color="info"
+                                        icon="store"
+                                        title="Партнеры"
+                                        count="34k"
+                                    />
+                                </MDBox>
+                            </Grid>
+                        </Grid>
+                        {Object.keys(years).length > 0 && (
+                            <>
+                                {Object.keys(years).sort().map(year => (
+                                    <div key={year}>
+                                        {Object.keys(years[year]).sort().map(quarter => (
+                                            <div key={quarter}>
+                                                <MDTypography variant="h5" gutterBottom sx={{ mt: 4 }}>{year} |  {quarter} - Квартал </MDTypography>
+
+                                                <Table>
+                                                    <TableHead style={{ display: 'table-header-group' }}>
+                                                        <TableRow>
+                                                            <TableCell>Организация</TableCell>
+                                                            <TableCell>Дата поставки</TableCell>
+                                                            <TableCell>Сумма</TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
+                                                        {years[year][quarter].receipts.map((receipt, index) => (
+                                                            <TableRow key={index}>
+                                                                <TableCell>{receipt.contractorName}</TableCell>
+                                                                <TableCell>{receipt.createdDate}</TableCell>
+                                                                <TableCell align='right'>{receipt.totalCost.toFixed(2)}</TableCell>
+
+                                                            </TableRow>
+                                                        ))}
+                                                        <TableRow>
+                                                            <TableCell colSpan={3}>
+                                                                <MDTypography variant="h6" align='right' gutterBottom>
+                                                                    Итоги: {years[year][quarter].total.toFixed(2)}
+                                                                </MDTypography>
+
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    </TableBody>
+                                                </Table>
+
+                                            </div>
+                                        ))}
+                                    </div>
+                                ))}
+                            </>
+                        )}
+                    </MDBox>
+
                     <MDBox px={3} display="flex" alignItems="center" justifyContent="end">
                         <MDButton
                             variant="outlined"
@@ -99,14 +197,14 @@ function Basic() {
                             variant="outlined"
                             color="error"
                             size="small"
-                            
+
                         >
-                          Удалить клиента
+                            Удалить клиента
                         </MDButton>
                     </MDBox>
                 </MDBox>
             </Card>
-         
+
         </DashboardLayout>
     );
 }

@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Card, Container } from '@mui/material';
 import Swal from 'sweetalert2';
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
@@ -14,12 +19,25 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { selectIsAuth } from '../../../redux/slices/auth';
 import { fetchClientById, fetchAddClient, fetchUpdateClient } from '../../../redux/actions/client';
 
+
+import XMLParser from './XmlParser';
 const formConfig = [
-  { key: 'label', label: 'ФИО', type: "text" },
-  { key: 'typeBusiness', label: 'Вид бизнеса', type: "list", option:'' },
-  { key: 'label', label: 'Налоговая ставка', type: "number" },
-  
+  { key: 'name', label: 'ФИО', type: "text" },
+  { key: 'typeBusiness', label: 'Вид бизнеса', type: "list", option: 'businessTypes' },
+  { key: 'tax', label: 'Налоговая ставка', type: "number" },
+
 ];
+
+const businessTypes = [
+  { id: 1, name: 'Индивидуальный предприниматель ', value: 'ip' },
+  { id: 2, name: 'ОсОО', value: 'ocoo' }
+]
+
+const optionsMap = {
+  businessTypes: businessTypes,
+};
+
+
 
 const EditEmitent = () => {
   const dispatch = useDispatch();
@@ -35,6 +53,8 @@ const EditEmitent = () => {
       return acc;
     }, {})
   );
+
+  const [receiptsFromDB, setReceiptsFromDB] = useState([]);
 
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -69,45 +89,58 @@ const EditEmitent = () => {
   const handleSubmit = async () => {
     setLoading(true);
     let response = ''
+
     try {
-        if (!isEditing) {
-           response = await dispatch(fetchAddClient(formData));
-        } else {
-           response = await dispatch(fetchUpdateClient({ id, formData }));
+      if (!isEditing) {
+        response = await dispatch(fetchAddClient(formData));
+      } else {
+        response = await dispatch(fetchUpdateClient({ id: id, data: formData }));
+      }
+      if (response.error) {
+        throw new Error(response.error);
+      }
+
+      console.log(response, 'respons')
+
+      const newId = response.payload._id;
+
+      Swal.fire({
+        title: 'Успешно!',
+        text: 'Данные успешно отправлены',
+        icon: 'success',
+        confirmButtonText: 'Ок',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (!isEditing) {
+            navigate(`/client/${newId}`)
+          } else {
+            navigate(`/client/${id}`)
+          }
         }
-
-    
-        if (response.error) {
-            throw new Error(response.error);
-        }
-        
-        console.log(response,'respons')
-
-        const newId = response.payload._id; 
-
-        Swal.fire({
-            title: 'Успешно!',
-            text: 'Данные успешно отправлены',
-            icon: 'success',
-            confirmButtonText: 'Ок',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                navigate(`/client/${newId}`) 
-            }
-        });
+      });
     } catch (error) {
-        console.error('Ошибка при отправке данных:', error);
-        Swal.fire({
-            title: 'Ошибка!',
-            text: 'Произошла ошибка при отправке данных на сервер',
-            icon: 'error',
-            confirmButtonText: 'Ок',
-        });
+      console.error('Ошибка при отправке данных:', error);
+      Swal.fire({
+        title: 'Ошибка!',
+        text: 'Произошла ошибка при отправке данных на сервер',
+        icon: 'error',
+        confirmButtonText: 'Ок',
+      });
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-    
-};
+
+  };
+
+  // Функция для обновления formData из XMLParser
+  const updateFormDataFromXML = (receiptsData) => {
+    const mergedReceipts = { ...receiptsFromDB, ...receiptsData }; // Объединяем receipts из базы и XML
+    setFormData((prevData) => ({
+      ...prevData,
+      ['finance']: mergedReceipts,
+    }));
+
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -130,20 +163,47 @@ const EditEmitent = () => {
         <form>
           <MDBox>
             <Grid container spacing={2}>
-              {formConfig.map(({ key, label, type }) => (
-                <Grid sm={12} md={4} item key={key}>
-                  <MDInput
-                    fullWidth
-                    label={label}
-                    type={type}
-                    name={key}
-                    value={formData[key]}
-                    onChange={handleChange}
-                  />
+              {formConfig.map(({ key, label, type, option }) => (
+                <Grid sm={12} md={6} item key={key}> 
+                  {type === 'list' ? (
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+                      <Select
+                        name={key}
+                        value={formData[key]}
+                        label={label}
+                        onChange={handleChange}
+                      >
+
+                        {(optionsMap[option] || []).map(opt => (
+                          <MenuItem key={opt.id} value={opt.value}>
+                            {opt.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  ) : (
+                    <MDInput
+                      fullWidth
+                      label={label}
+                      type={type}
+                      name={key}
+                      value={formData[key]}
+                      onChange={handleChange}
+                    />
+                  )}
+
                 </Grid>
               ))}
             </Grid>
           </MDBox>
+
+
+
+          <XMLParser onUpdateReceipts={updateFormDataFromXML} />
+
+
+
           <MDBox mt={4} display="flex" justifyContent="end">
             <MDButton
               color="error"
