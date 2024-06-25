@@ -6,10 +6,13 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
 import Checkbox from '@mui/material/Checkbox';
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { Container, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 
 import FormGroup from '@mui/material/FormGroup';
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -22,11 +25,14 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 import { fetchDeclarationById, fetchAddDeclaration } from '../../../redux/actions/declarations';
+import { fetchClients, fetchClientById } from '../../../redux/actions/client';
 import MDButton from 'components/MDButton';
 
 
 function Form() {
     const [formData, setFormData] = useState({
+        company:'',
+        taxable_period:'',
         "Specified": '',
         "Model_Specified": '',
         "Tin": '',
@@ -277,27 +283,63 @@ function Form() {
         "STI102X799": ''
     })
 
-  
+
 
     const { id } = useParams();
     const dispatch = useDispatch();
     const { data, status } = useSelector(state => state.declarations.declaration);
+    const clientData = useSelector(state => state.client.client?.data)
+    const [isEditing, setIsEditing] = useState(false);
+    const [clientFinance, setClientFinance] = useState([]);
+    const clients = useSelector(state => state.client.clients)
+
+    useEffect(() => {
+        dispatch(fetchClients())
+    }, []);
+
+    useEffect(() => {
+        dispatch(fetchClientById(formData.company))
+        
+    }, [formData.company]);
+
+    useEffect(() => {
+        if(clientData.finance) {
+            setClientFinance(Object.keys(clientData.finance))
+        }   
+    }, [clientData]);
+
+    useEffect(() => {
+     
+          
+        if(clientData.finance) {
+            const totalCostSum = Object.values(clientData.finance[formData.taxable_period]).reduce((accumulator, currentValue) => {
+                return accumulator + currentValue.total;
+              }, 0);
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                ['STI102X057']:  clientData.tax,
+            }));
+
+            console.log(totalCostSum)
+        }   
+    }, [formData.taxable_period]);
+ 
+
 
     useEffect(() => {
         if (id) {
             const fetchData = async () => {
                 await dispatch(fetchDeclarationById(id));
+                setIsEditing(id)
             }
             fetchData();
+
         }
     }, [id]);
 
     useEffect(() => {
-        // Update form data when dataaa changes
         if (data && data.content) {
-            console.log(data, 'fata')
             setFormData(data.content);
-         
         }
     }, [data.content]);
 
@@ -306,7 +348,6 @@ function Form() {
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        console.log(name.value)
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: type === 'checkbox' ? checked : value,
@@ -330,12 +371,58 @@ function Form() {
                 <Card>
                     {status === "loading" && id ? (
                         <MDBox py='30px' sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <CircularProgress color='info' size='80px' />
-                    </MDBox>) : (
+                            <CircularProgress color='info' size='80px' />
+                        </MDBox>) : (
                         <div className="main-content-wrap sidenav-open d-flex flex-column pb-5">
                             <div className="main-content">
+                                {!isEditing && (
+                                    <MDBox px={1}>
+                                        <MDTypography variant="h4" m={2}>
+                                            Выберите компанию и год
+                                        </MDTypography>
+                                        <Grid container spacing={2}>
+                                            <Grid sm={12} md={6} item>
+                                                <FormControl fullWidth>
+                                                    <InputLabel id="demo-simple-select-label">{"Компания"}</InputLabel>
+                                                    <Select
+                                                        name="company"
+                                                        value={formData.company}
+                                                        label="Компания"
+                                                        onChange={handleChange}
+                                                    >
 
+                                                        {clients.items.map(opt => (
+                                                            <MenuItem key={opt.id} value={opt._id}>
+                                                                {opt.name}
+                                                            </MenuItem>
+                                                        ))}
 
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid sm={12} md={6} item>
+                                                <FormControl fullWidth>
+                                                    <InputLabel id="demo-simple-select-label">Налоговый период</InputLabel>
+                                                    <Select
+                                                        name="taxable_period"
+                                                        value={formData.taxable_period}
+                                                        label="Налоговый период"
+                                                        onChange={handleChange}
+                                                    >
+
+                                                    {clientFinance?.map(year => (
+                                                         <MenuItem key={year} value={year}>
+                                                        {year}
+                                                     </MenuItem>
+                                                    ))}
+                                                       
+
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                        </Grid>
+                                    </MDBox>
+                                )}
                                 <MDTypography variant="h4" m={2}>
                                     Единая налоговая декларация физического лица, осуществляющего
                                     предпринимательскую деятельность (01.01.2022 -) (FORM STI-102_4)
@@ -8373,11 +8460,11 @@ function Form() {
                                             </div>
                                         </div>
                                     </div>
-                                    <MDBox sx={{display:'flex',justifyContent:'end'}} className="">
+                                    <MDBox sx={{ display: 'flex', justifyContent: 'end' }} className="">
                                         <MDButton
                                             variant="outlined"
                                             color='error'
-                                            style={{marginRight:'12px'}}
+                                            style={{ marginRight: '12px' }}
                                             href="/report/declaration">
                                             Назад
                                         </MDButton>
@@ -8388,16 +8475,16 @@ function Form() {
                                         >
                                             Отправить на проверку
                                         </MDButton>
-                                      
-                                         <MDButton
+
+                                        <MDButton
                                             color='success'
                                             onClick={onSubmit}
                                             mx={2}
                                         >
                                             Сохранить
                                         </MDButton>
-                                       
-                                      
+
+
                                     </MDBox>
 
                                 </div>

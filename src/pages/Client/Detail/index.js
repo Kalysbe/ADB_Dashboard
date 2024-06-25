@@ -31,7 +31,7 @@ function Basic() {
 
     const isEmitentLoading = emitent.status === 'loading';
     const emitentData = emitent.data;
-
+    const clientFinanceTotal = emitentData.financeSummary
 
 
 
@@ -48,6 +48,15 @@ function Basic() {
 
     const [years, setYears] = useState({});
 
+    const formatNumber = (number, locale = 'en-US') => {
+        if (typeof number !== 'number') {
+          return 'Invalid number';
+        }
+        return number.toLocaleString(locale, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).replace(/,/g, ' '); // Убираем запятые
+      };
 
     return (
         <DashboardLayout>
@@ -99,8 +108,8 @@ function Basic() {
                                 <MDBox mb={1.5}>
                                     <ComplexStatisticsCard
                                         icon="leaderboard"
-                                        title="Доходы"
-                                        count="2,300"
+                                        title="Поступления"
+                                        count={formatNumber(clientFinanceTotal?.totalCost)}
                                     />
                                 </MDBox>
                             </Grid>
@@ -110,7 +119,7 @@ function Basic() {
                                         color="info"
                                         icon="weekend"
                                         title="Налог"
-                                        count={281}
+                                        count={formatNumber(clientFinanceTotal?.taxAmount)}
                                     />
                                 </MDBox>
                             </Grid>
@@ -120,8 +129,8 @@ function Basic() {
                                     <ComplexStatisticsCard
                                         color="info"
                                         icon="money"
-                                        title="Чистая прибыль"
-                                        count="+91"
+                                        title="Прибыль"
+                                        count={formatNumber(clientFinanceTotal?.totalCost - clientFinanceTotal?.taxAmount)}
                                     
                                     />
                                 </MDBox>
@@ -133,7 +142,7 @@ function Basic() {
                                         color="info"
                                         icon="store"
                                         title="Партнеры"
-                                        count="34k"
+                                        count={clientFinanceTotal?.uniqueContractors}
                                     />
                                 </MDBox>
                             </Grid>
@@ -159,14 +168,14 @@ function Basic() {
                                                             <TableRow key={index}>
                                                                 <TableCell>{receipt.contractorName}</TableCell>
                                                                 <TableCell>{receipt.createdDate}</TableCell>
-                                                                <TableCell align='right'>{receipt.totalCost.toFixed(2)}</TableCell>
+                                                                <TableCell align='right'>{formatNumber(receipt.totalCost)}</TableCell>
 
                                                             </TableRow>
                                                         ))}
                                                         <TableRow>
                                                             <TableCell colSpan={3}>
                                                                 <MDTypography variant="h6" align='right' gutterBottom>
-                                                                    Итоги: {years[year][quarter].total.toFixed(2)}
+                                                                    Итоги: {formatNumber(years[year][quarter].total)}
                                                                 </MDTypography>
 
                                                             </TableCell>

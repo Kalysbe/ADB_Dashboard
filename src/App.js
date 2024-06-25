@@ -185,8 +185,6 @@ export default function App() {
 
   }, [])
 
-  console.log(layout)
-
   useEffect(() => {
   if (layout === "dashboard" && !window.localStorage.getItem("token") || !isAuth) {
     navigate('/authentication/sign-in');
