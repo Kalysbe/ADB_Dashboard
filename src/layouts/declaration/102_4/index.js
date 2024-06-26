@@ -34,7 +34,7 @@ function Form() {
         company:'',
         taxable_period:'',
         "Specified": '',
-        "Model_Specified": '',
+        "Model_Specified": 'Initial',
         "Tin": '',
         Name: "test121",
         "RayonCode": 14,
@@ -89,21 +89,21 @@ function Form() {
         "STI102X083": '',
         "STI102X084": '',
         "STI102X085": '',
-        "STI101X1": '',
-        "STI101X2": '',
-        "STI101X3": '',
+        "STI101X1": false,
+        "STI101X2": false,
+        "STI101X3": false,
         "STI101X4": '',
-        "STI101X4_2": '',
-        "STI101X5": '',
-        "STI101X6": '',
-        "STI101X7": '',
+        "STI101X4_2": false,
+        "STI101X5": false,
+        "STI101X6": false,
+        "STI101X7": false,
         "STI101X7_1": '',
         "STI101X7_2": '',
         "STI101X7_3": '',
         "STI101X7_4": '',
         "STI101X7_5": '',
         "STI101X7_6": '',
-        "STI101X8": '',
+        "STI101X8": false,
         "STI102X150": '',
         "STI102X151": '',
         "STI102X152": '',
@@ -312,15 +312,18 @@ function Form() {
      
           
         if(clientData.finance) {
-            const totalCostSum = Object.values(clientData.finance[formData.taxable_period]).reduce((accumulator, currentValue) => {
-                return accumulator + currentValue.total;
-              }, 0);
+            if(clientData.finance[formData.taxable_period]) {
+                const totalCostSum = Object.values(clientData.finance[formData.taxable_period]).reduce((accumulator, currentValue) => {
+                    return accumulator + currentValue.total;
+                  }, 0);
+            }
+      
             setFormData((prevFormData) => ({
                 ...prevFormData,
                 ['STI102X057']:  clientData.tax,
             }));
 
-            console.log(totalCostSum)
+          
         }   
     }, [formData.taxable_period]);
  
@@ -361,6 +364,7 @@ function Form() {
 
     }
 
+    console.log(typeof formData.STI101X3); // should log 'boolean'
 
 
 
@@ -391,8 +395,8 @@ function Form() {
                                                         onChange={handleChange}
                                                     >
 
-                                                        {clients.items.map(opt => (
-                                                            <MenuItem key={opt.id} value={opt._id}>
+                                                        {clients.items.map((opt,index) => (
+                                                            <MenuItem key={index} value={opt._id}>
                                                                 {opt.name}
                                                             </MenuItem>
                                                         ))}
@@ -409,7 +413,9 @@ function Form() {
                                                         label="Налоговый период"
                                                         onChange={handleChange}
                                                     >
-
+                                                      <MenuItem selected>
+                                                        Выберите налоговый период
+                                                     </MenuItem>
                                                     {clientFinance?.map(year => (
                                                          <MenuItem key={year} value={year}>
                                                         {year}
@@ -2096,22 +2102,22 @@ function Form() {
                                                                         label="Приложение 1 (FORM STI -102-001)" />
                                                                     <FormControlLabel
                                                                         name="STI101X2"
-                                                                        checked={formData["STI101X2"]}
+                                                                        checked={formData.STI101X2}
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
-                                                                        label=" Приложение 2 (FORM STI -102-002)" />
+                                                                        label="Приложение 2 (FORM STI -102-002)" />
                                                                     <FormControlLabel
                                                                         name="STI101X3"
-                                                                        checked={formData["STI101X3"]}
+                                                                        checked={formData.STI101X3}
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
-                                                                        label=" Приложение 3 (FORM STI -102-003)" />
+                                                                        label="Приложение 3 (FORM STI -102-003)" />
                                                                     <FormControlLabel
                                                                         name="STI101X4"
                                                                         checked={formData["STI101X4"]}
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
-                                                                        label=" Приложение 4 (FORM STI -102-004)" />
+                                                                        label="Приложение 4 (FORM STI -102-004)" />
                                                                 </FormGroup>
                                                                 <FormGroup>
                                                                     <FormControlLabel
