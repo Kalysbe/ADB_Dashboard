@@ -96,7 +96,6 @@ function SimpleDialog(props) {
         confirmButtonText: 'Ок'
       });
 
-      // Возможно, здесь вы захотите обновить UI на основе ответа от сервера
 
     } catch (error) {
       console.error('Ошибка при отправке данных:', error);
@@ -109,27 +108,29 @@ function SimpleDialog(props) {
     }
   };
 
+  console.log(data,'dataa')
 
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle> {formAct === 'add' ? 'Добавление' : 'Редактирование'} пользователя </DialogTitle>
       <DialogContent>
         <MDBox >
-          <MDBox my={1}>
-            <MDInput fullWidth label="Логин" value={user.login}/>
-          </MDBox>
-          <MDBox my={1}>
-            <MDInput fullWidth label="Имя" value={user.fullName} />
+        <MDBox my={1}>
+            <MDInput 
+            fullWidth 
+            label="Имя"
+            name="fullName" 
+            value={data.fullName} 
+            onChange={handleChange}/>
           </MDBox>
           <MDBox my={2}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Роль пользователя {user.fullName}</InputLabel>
+              <InputLabel>Роль пользователя</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={user.role}
                 label="Роль пользователя"
-                // onChange={12}
+                name="role"
+                value={data.role}
+                onChange={handleChange}
               >
                 <MenuItem value={1}>Главный админ</MenuItem>
                 <MenuItem value={2}>Модератор</MenuItem>
@@ -137,7 +138,25 @@ function SimpleDialog(props) {
               </Select>
             </FormControl>
           </MDBox>
-          {Object.keys(data).map((key) => (
+       
+          <MDBox my={1}>
+            <MDInput 
+            fullWidth
+             label="Логин" 
+             name="login"
+             value={data.login}
+             onChange={handleChange}/>
+          </MDBox>
+        
+          <MDBox my={1}>
+            <MDInput 
+            fullWidth
+             label={formAct === 'add' ? 'Пароль' : 'Новый пароль'} 
+             name="password"
+             value={data.password} 
+             onChange={handleChange}/>
+          </MDBox>
+          {/* {Object.keys(data).map((key) => (
             <MDBox my={2} key={key}>
               {key === 'role' ? (
                 <FormControl fullWidth>
@@ -166,7 +185,7 @@ function SimpleDialog(props) {
                 />
               )}
             </MDBox>
-          ))}
+          ))} */}
         </MDBox>
       </DialogContent>
       <DialogActions>
@@ -204,6 +223,9 @@ function Users() {
   const { users } = useSelector(state => state.users);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
+  const myAccount = useSelector(state => state.auth.data)
+
+  console.log(myAccount)
 
   const actAdd = 'add'
   const actUpd = 'upd'
@@ -334,7 +356,7 @@ function Users() {
                           </MDTypography>
                         </TableCell>
                         <TableCell>
-                          <MDTypography variant="h6" color="dark">
+                          <MDTypography variant="h6" color={myAccount?._id === item._id ? 'success' : 'dark'}>
                             {item.fullName}
                           </MDTypography>
                         </TableCell>
@@ -354,10 +376,12 @@ function Users() {
                             Редактировать
                           </MDButton>
 
-
+                        {myAccount?._id !== item._id && (
                           <MDButton variant="outlined" color="error" size="small" style={{ marginLeft: '8px' }} onClick={() => onDelete(item._id)}>
-                            Удалить
-                          </MDButton>
+                          Удалить
+                        </MDButton>
+                        )}
+                          
 
                         </TableCell>
 

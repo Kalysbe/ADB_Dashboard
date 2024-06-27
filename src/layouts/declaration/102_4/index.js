@@ -31,13 +31,13 @@ import MDButton from 'components/MDButton';
 
 function Form() {
     const [formData, setFormData] = useState({
-        company:'',
-        taxable_period:'',
+        company: '',
+        taxable_period: '',
         "Specified": '',
         "Model_Specified": 'Initial',
         "Tin": '',
-        Name: "test121",
-        "RayonCode": 14,
+        Name: "",
+        "RayonCode": 0,
         "RayonName": '',
         "PassportData": '',
         "PassportCountry": '',
@@ -89,7 +89,7 @@ function Form() {
         "STI102X083": '',
         "STI102X084": '',
         "STI102X085": '',
-        "STI101X1": false,
+        STI101X1: false,
         "STI101X2": false,
         "STI101X3": false,
         "STI101X4": '',
@@ -280,7 +280,8 @@ function Form() {
         "STI102X791": '',
         "STI102X792": '',
         "STI102X798": '',
-        "STI102X799": ''
+        "STI102X799": '',
+        STI102X077: 0
     })
 
 
@@ -299,34 +300,34 @@ function Form() {
 
     useEffect(() => {
         dispatch(fetchClientById(formData.company))
-        
+
     }, [formData.company]);
 
     useEffect(() => {
-        if(clientData.finance) {
+        if (clientData.finance) {
             setClientFinance(Object.keys(clientData.finance))
-        }   
+        }
     }, [clientData]);
 
     useEffect(() => {
-     
-          
-        if(clientData.finance) {
-            if(clientData.finance[formData.taxable_period]) {
+
+
+        if (clientData.finance) {
+            if (clientData.finance[formData.taxable_period]) {
                 const totalCostSum = Object.values(clientData.finance[formData.taxable_period]).reduce((accumulator, currentValue) => {
                     return accumulator + currentValue.total;
-                  }, 0);
+                }, 0);
             }
-      
+
             setFormData((prevFormData) => ({
                 ...prevFormData,
-                ['STI102X057']:  clientData.tax,
+                ['STI102X057']: clientData.tax,
             }));
 
-          
-        }   
+
+        }
     }, [formData.taxable_period]);
- 
+
 
 
     useEffect(() => {
@@ -364,9 +365,6 @@ function Form() {
 
     }
 
-    console.log(typeof formData.STI101X3); // should log 'boolean'
-
-
 
     return (
         <DashboardLayout>
@@ -386,7 +384,7 @@ function Form() {
                                         </MDTypography>
                                         <Grid container spacing={2}>
                                             <Grid sm={12} md={6} item>
-                                                <FormControl fullWidth>
+                                                {/* <FormControl fullWidth>
                                                     <InputLabel id="demo-simple-select-label">{"Компания"}</InputLabel>
                                                     <Select
                                                         name="company"
@@ -394,18 +392,20 @@ function Form() {
                                                         label="Компания"
                                                         onChange={handleChange}
                                                     >
-
-                                                        {clients.items.map((opt,index) => (
+                                                        <MenuItem value='0' selected={true}>
+                                                            Выберите налоговый период
+                                                        </MenuItem>
+                                                        {clients.items.map((opt, index) => (
                                                             <MenuItem key={index} value={opt._id}>
                                                                 {opt.name}
                                                             </MenuItem>
                                                         ))}
 
                                                     </Select>
-                                                </FormControl>
+                                                </FormControl> */}
                                             </Grid>
                                             <Grid sm={12} md={6} item>
-                                                <FormControl fullWidth>
+                                                {/* <FormControl fullWidth>
                                                     <InputLabel id="demo-simple-select-label">Налоговый период</InputLabel>
                                                     <Select
                                                         name="taxable_period"
@@ -413,18 +413,18 @@ function Form() {
                                                         label="Налоговый период"
                                                         onChange={handleChange}
                                                     >
-                                                      <MenuItem selected>
-                                                        Выберите налоговый период
-                                                     </MenuItem>
-                                                    {clientFinance?.map(year => (
-                                                         <MenuItem key={year} value={year}>
-                                                        {year}
-                                                     </MenuItem>
-                                                    ))}
-                                                       
+                                                        <MenuItem value='0' selected={true}>
+                                                            Выберите налоговый период
+                                                        </MenuItem>
+                                                        {clientFinance?.map(year => (
+                                                            <MenuItem key={year} value={year}>
+                                                                {year}
+                                                            </MenuItem>
+                                                        ))}
+
 
                                                     </Select>
-                                                </FormControl>
+                                                </FormControl> */}
                                             </Grid>
                                         </Grid>
                                     </MDBox>
@@ -436,22 +436,11 @@ function Form() {
 
                                 <div className="separator-breadcrumb border-top" />
                                 <div>
-
                                     <input type="hidden"
                                         onChange={handleChange}
                                         name="Specified"
                                         value={formData["Specified"]}
-
                                         id="Specified" />
-
-
-
-
-
-
-
-
-
                                     <div className="p-4 partial-block">
                                         <div className="row">
                                             <div className="form-group col-md-12">
@@ -485,7 +474,6 @@ function Form() {
 
                                                         onChange={handleChange}
                                                         className="form-control"
-                                                        defaultValue={23004200250255}
                                                         disabled type="text"
                                                         id="Tin"
                                                     />
@@ -509,7 +497,6 @@ function Form() {
                                                         onChange={handleChange}
                                                         className="form-control"
                                                         name="Name"
-                                                        defaultValue="Рахманбердиев Калысбек Ажибекович"
                                                         disabled type="text"
                                                         id="Name"
                                                     />
@@ -524,100 +511,104 @@ function Form() {
                                                                 104
                                                             </span>
                                                         </div>
-                                                        <select
-                                                            name="RayonCode"
-                                                            value={formData["RayonCode"]}
-
-                                                            onChange={handleChange}
-                                                            className="search-select form-control"
-                                                            id="RayonCode"
-                                                        >
-                                                            <option value="">Выберите налоговый орган</option>
-                                                            <option value="00_">00_ - Центральный аппарат</option>
-                                                            <option value={1}>001 - Октябрьский р-н</option>
-                                                            <option value={2}>
+                                                        <FormControl>
+                                                            <Select
+                                                                 name="RayonCode"
+                                                                 value={formData["RayonCode"]}
+                                                                 onChange={handleChange}
+                                                                 className="search-select form-control"
+                                                                 id="RayonCode">
+                                                                <MenuItem value={0} selected={true}>
+                                                                Выберите налоговый орган
+                                                                </MenuItem>     
+                                                                    <MenuItem value="00">00_ - Центральный аппарат</MenuItem>
+                                                            <MenuItem value={1}>001 - Октябрьский р-н</MenuItem>
+                                                            <MenuItem value={2}>
                                                                 002 - Ленинский р-н
-                                                            </option>
-                                                            <option value={3}>003 - Свердловский р-н</option>
-                                                            <option value={4}>004 - Первомайский р-н</option>
-                                                            <option value={5}>005 - Аламудунский р-н</option>
-                                                            <option value={7}>007 - Кеминский р-н</option>
-                                                            <option value={8}>008 - Иссыкатинский р-н</option>
-                                                            <option value={9}>009 - Жайылский р-н</option>
-                                                            <option value={10}>010 - Московский р-н</option>
-                                                            <option value={11}>011 - Панфиловский р-н</option>
-                                                            <option value={12}>012 - Сокулукский р-н</option>
-                                                            <option value={13}>013 - Чуйский р-н</option>
-                                                            <option value={14}>014 - Иссыккульский р-н</option>
-                                                            <option value={15}>015 - Аксуйский р-н</option>
-                                                            <option value={16}>016 - Тонский р-н</option>
-                                                            <option value={17}>017 - Жетиогузский р-н</option>
-                                                            <option value={18}>018 - Тюпский р-н</option>
-                                                            <option value={19}>019 - г.Каракол</option>
-                                                            <option value={20}>020 - г.Балыкчы</option>
-                                                            <option value={21}>021 - Алайский р-н</option>
-                                                            <option value={22}>022 - Чоналайский р-н</option>
-                                                            <option value={23}>023 - Араванский р-н</option>
-                                                            <option value={24}>024 - Баткенский р-н</option>
-                                                            <option value={25}>025 - Карасууйский р-н</option>
-                                                            <option value={26}>026 - Лейлекский р-н</option>
-                                                            <option value={27}>027 - Ноокатский р-н</option>
-                                                            <option value={28}>028 - Каракульджинский р-н</option>
-                                                            <option value={29}>029 - Узгенский р-н</option>
-                                                            <option value={30}>030 - Кадамжайский р-н</option>
-                                                            <option value={31}>031 - г.Кызыл-Кия</option>
-                                                            <option value={32}>032 - г.Ош</option>
-                                                            <option value={33}>033 - г.Сулюкта</option>
-                                                            <option value={34}>034 - Акталинский р-н</option>
-                                                            <option value={35}>035 - Атбашинский р-н</option>
-                                                            <option value={36}>036 - Кочкорский р-н</option>
-                                                            <option value={37}>037 - Жумгальский р-н</option>
-                                                            <option value={38}>038 - Нарынский р-н</option>
-                                                            <option value={39}>039 - Сузакский р-н</option>
-                                                            <option value={40}>040 - Ноокенский р-н</option>
-                                                            <option value={41}>041 - Алабукинский р-н</option>
-                                                            <option value={42}>042 - Токтогульский р-н</option>
-                                                            <option value={43}>043 - Аксыйский р-н</option>
-                                                            <option value={44}>044 - Тогузтороузский р-н</option>
-                                                            <option value={45}>045 - Базаркоргонский р-н</option>
-                                                            <option value={47}>047 - Чаткальский р-н</option>
-                                                            <option value={48}>048 - г.Джалал-Абад</option>
-                                                            <option value={49}>049 - г.Таш-Кумыр</option>
-                                                            <option value={50}>050 - г.Майлы-Суу</option>
-                                                            <option value={52}>052 - г.Кара-Куль</option>
-                                                            <option value={53}>053 - Таласский р-н</option>
-                                                            <option value={54}>054 - Бакайатинский р-н</option>
-                                                            <option value={55}>055 - Айтматовский р-н</option>
-                                                            <option value={56}>056 - Манасский р-н</option>
-                                                            <option value={57}>057 - г.Талас</option>
-                                                            <option value={58}>058 - г. Токмок</option>
-                                                            <option value={59}>059 - г. Нарын</option>
-                                                            <option value={60}>060 - г. Баткен</option>
-                                                            <option value={992}>
+                                                            </MenuItem>
+                                                            <MenuItem value={3}>003 - Свердловский р-н</MenuItem>
+                                                            <MenuItem value={4}>004 - Первомайский р-н</MenuItem>
+                                                            <MenuItem value={5}>005 - Аламудунский р-н</MenuItem>
+                                                            <MenuItem value={7}>007 - Кеминский р-н</MenuItem>
+                                                            <MenuItem value={8}>008 - Иссыкатинский р-н</MenuItem>
+                                                            <MenuItem value={9}>009 - Жайылский р-н</MenuItem>
+                                                            <MenuItem value={10}>010 - Московский р-н</MenuItem>
+                                                            <MenuItem value={11}>011 - Панфиловский р-н</MenuItem>
+                                                            <MenuItem value={12}>012 - Сокулукский р-н</MenuItem>
+                                                            <MenuItem value={13}>013 - Чуйский р-н</MenuItem>
+                                                            <MenuItem value={14}>014 - Иссыккульский р-н</MenuItem>
+                                                            <MenuItem value={15}>015 - Аксуйский р-н</MenuItem>
+                                                            <MenuItem value={16}>016 - Тонский р-н</MenuItem>
+                                                            <MenuItem value={17}>017 - Жетиогузский р-н</MenuItem>
+                                                            <MenuItem value={18}>018 - Тюпский р-н</MenuItem>
+                                                            <MenuItem value={19}>019 - г.Каракол</MenuItem>
+                                                            <MenuItem value={20}>020 - г.Балыкчы</MenuItem>
+                                                            <MenuItem value={21}>021 - Алайский р-н</MenuItem>
+                                                            <MenuItem value={22}>022 - Чоналайский р-н</MenuItem>
+                                                            <MenuItem value={23}>023 - Араванский р-н</MenuItem>
+                                                            <MenuItem value={24}>024 - Баткенский р-н</MenuItem>
+                                                            <MenuItem value={25}>025 - Карасууйский р-н</MenuItem>
+                                                            <MenuItem value={26}>026 - Лейлекский р-н</MenuItem>
+                                                            <MenuItem value={27}>027 - Ноокатский р-н</MenuItem>
+                                                            <MenuItem value={28}>028 - Каракульджинский р-н</MenuItem>
+                                                            <MenuItem value={29}>029 - Узгенский р-н</MenuItem>
+                                                            <MenuItem value={30}>030 - Кадамжайский р-н</MenuItem>
+                                                            <MenuItem value={31}>031 - г.Кызыл-Кия</MenuItem>
+                                                            <MenuItem value={32}>032 - г.Ош</MenuItem>
+                                                            <MenuItem value={33}>033 - г.Сулюкта</MenuItem>
+                                                            <MenuItem value={34}>034 - Акталинский р-н</MenuItem>
+                                                            <MenuItem value={35}>035 - Атбашинский р-н</MenuItem>
+                                                            <MenuItem value={36}>036 - Кочкорский р-н</MenuItem>
+                                                            <MenuItem value={37}>037 - Жумгальский р-н</MenuItem>
+                                                            <MenuItem value={38}>038 - Нарынский р-н</MenuItem>
+                                                            <MenuItem value={39}>039 - Сузакский р-н</MenuItem>
+                                                            <MenuItem value={40}>040 - Ноокенский р-н</MenuItem>
+                                                            <MenuItem value={41}>041 - Алабукинский р-н</MenuItem>
+                                                            <MenuItem value={42}>042 - Токтогульский р-н</MenuItem>
+                                                            <MenuItem value={43}>043 - Аксыйский р-н</MenuItem>
+                                                            <MenuItem value={44}>044 - Тогузтороузский р-н</MenuItem>
+                                                            <MenuItem value={45}>045 - Базаркоргонский р-н</MenuItem>
+                                                            <MenuItem value={47}>047 - Чаткальский р-н</MenuItem>
+                                                            <MenuItem value={48}>048 - г.Джалал-Абад</MenuItem>
+                                                            <MenuItem value={49}>049 - г.Таш-Кумыр</MenuItem>
+                                                            <MenuItem value={50}>050 - г.Майлы-Суу</MenuItem>
+                                                            <MenuItem value={52}>052 - г.Кара-Куль</MenuItem>
+                                                            <MenuItem value={53}>053 - Таласский р-н</MenuItem>
+                                                            <MenuItem value={54}>054 - Бакайатинский р-н</MenuItem>
+                                                            <MenuItem value={55}>055 - Айтматовский р-н</MenuItem>
+                                                            <MenuItem value={56}>056 - Манасский р-н</MenuItem>
+                                                            <MenuItem value={57}>057 - г.Талас</MenuItem>
+                                                            <MenuItem value={58}>058 - г. Токмок</MenuItem>
+                                                            <MenuItem value={59}>059 - г. Нарын</MenuItem>
+                                                            <MenuItem value={60}>060 - г. Баткен</MenuItem>
+                                                            <MenuItem value={992}>
                                                                 992 - УГНС по ЦОП города Ош и Ошской области
-                                                            </option>
-                                                            <option value={993}>
+                                                            </MenuItem>
+                                                            <MenuItem value={993}>
                                                                 993 - Управление ГНС по работе с неучтенными товарами в
                                                                 рамках торговли ЕАЭС
-                                                            </option>
-                                                            <option value={994}>994 - УГНС по ЦОП г. Бишкек</option>
-                                                            <option value={995}>
+                                                            </MenuItem>
+                                                            <MenuItem value={994}>994 - УГНС по ЦОП г. Бишкек</MenuItem>
+                                                            <MenuItem value={995}>
                                                                 995 - УГНС по Государственному регулированию и контроля
                                                                 алкогольного рынка и оборота табачных изделий по г.
                                                                 Бишкек, северному и южному регионам
-                                                            </option>
-                                                            <option value={996}>
+                                                            </MenuItem>
+                                                            <MenuItem value={996}>
                                                                 996 - УГНС по работе с косвенными налогами в рамках ЕАЭС
                                                                 по Чуйской и Таласской областям
-                                                            </option>
-                                                            <option value={997}>997 - УККН ЮГ</option>
-                                                            <option value={998}>
+                                                            </MenuItem>
+                                                            <MenuItem value={997}>997 - УККН ЮГ</MenuItem>
+                                                            <MenuItem value={998}>
                                                                 998 - УГНС по контролю за субъектами СЭЗ г. Бишкек
-                                                            </option>
-                                                            <option value={999}>
+                                                            </MenuItem>
+                                                            <MenuItem value={999}>
                                                                 999 - УККН по городу Бишкек и Северному региону
-                                                            </option>
-                                                        </select>
+                                                            </MenuItem>
+
+
+                                                            </Select>
+                                                        </FormControl>
                                                         <span
                                                             className="text-danger field-validation-valid"
                                                             data-valmsg-for="RayonCode"
@@ -636,7 +627,6 @@ function Form() {
                                                     disabled
                                                     type="text"
                                                     id="RayonName"
-                                                    defaultValue="Ленинский р-н"
                                                 />
                                             </div>
                                             <div className="form-group col-md-3">
@@ -653,7 +643,6 @@ function Form() {
 
                                                         onChange={handleChange}
                                                         className="form-control"
-                                                        defaultValue="ID1058411"
                                                         type="text"
                                                         id="PassportData"
                                                     />
@@ -673,7 +662,6 @@ function Form() {
 
                                                         onChange={handleChange}
                                                         className="form-control"
-                                                        defaultValue=""
                                                         type="text"
                                                         id="PassportCountry"
                                                     />
@@ -693,7 +681,6 @@ function Form() {
 
                                                         onChange={handleChange}
                                                         className="form-control"
-                                                        defaultValue="0312311484, 05551031, 0500177009"
                                                         type="text"
                                                         id="PhoneNumber"
                                                     />
@@ -713,7 +700,6 @@ function Form() {
 
                                                         onChange={handleChange}
                                                         className="form-control"
-                                                        defaultValue=""
                                                         type="text"
                                                         id="Email"
                                                     />
@@ -733,7 +719,6 @@ function Form() {
 
                                                         onChange={handleChange}
                                                         className="form-control"
-                                                        defaultValue="      "
                                                         type="text"
                                                         id="Zip"
                                                     />
@@ -755,7 +740,6 @@ function Form() {
 
                                                         onChange={handleChange}
                                                         className="form-control"
-                                                        defaultValue="Таласская обл., г. Талас"
                                                         type="text"
                                                         id="DistrictAddress"
                                                     />
@@ -777,7 +761,6 @@ function Form() {
 
                                                         onChange={handleChange}
                                                         className="form-control"
-                                                        defaultValue="улица Манас, дом 16"
                                                         type="text"
                                                         id="StreetAddress"
                                                     />
@@ -789,7 +772,6 @@ function Form() {
 
                                                 onChange={handleChange}
                                                 className="form-control"
-                                                defaultValue="ип"
                                                 hidden="hidden"
                                                 type="text"
                                                 id="LegalFormCode"
@@ -822,7 +804,6 @@ function Form() {
                                                         value={formData["STI102X112"]}
 
                                                         onChange={handleChange}
-                                                        defaultValue=""
                                                     />
                                                 </div>
                                                 <span
@@ -849,7 +830,6 @@ function Form() {
                                                         value={formData["STI102X113"]}
 
                                                         onChange={handleChange}
-                                                        defaultValue=""
                                                     />
                                                 </div>
                                                 <span
@@ -876,7 +856,6 @@ function Form() {
                                                         value={formData["STI102X114"]}
 
                                                         onChange={handleChange}
-                                                        defaultValue=""
                                                     />
                                                 </div>
                                                 <span
@@ -919,7 +898,6 @@ function Form() {
                                                             placeholder="Выберите год"
                                                             className="form-control"
                                                             id="datepicker"
-                                                            defaultValue={2023}
                                                         />
                                                     </div>
                                                     {/* c
@@ -1052,7 +1030,6 @@ function Form() {
                                                                     value={formData["STI102X050"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1085,7 +1062,6 @@ function Form() {
                                                                     value={formData["STI102X051"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1117,7 +1093,6 @@ function Form() {
                                                                     value={formData["STI102X052"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1150,7 +1125,6 @@ function Form() {
                                                                     value={formData["STI102X053"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1183,7 +1157,6 @@ function Form() {
                                                                     value={formData["STI102X054"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1215,7 +1188,6 @@ function Form() {
                                                                     value={formData["STI102X055"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1247,7 +1219,6 @@ function Form() {
                                                                     value={formData["STI102X056"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1276,7 +1247,6 @@ function Form() {
                                                                     value={formData["STI102X057"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1308,7 +1278,6 @@ function Form() {
                                                                     value={formData["STI102X058"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                         </div>
@@ -1335,7 +1304,6 @@ function Form() {
                                                                     value={formData["STI102X059"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1368,9 +1336,7 @@ function Form() {
                                                                     data-val-required="The STI102X060 field is required."
                                                                     name="STI102X060"
                                                                     value={formData["STI102X060"]}
-
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1404,7 +1370,6 @@ function Form() {
                                                                     value={formData["STI102X061"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1436,7 +1401,6 @@ function Form() {
                                                                     value={formData["STI102X062"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1468,7 +1432,6 @@ function Form() {
                                                                     value={formData["STI102X063"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1500,7 +1463,6 @@ function Form() {
                                                                     value={formData["STI102X064"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1534,7 +1496,6 @@ function Form() {
                                                                     value={formData["STI102X065"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1573,7 +1534,6 @@ function Form() {
                                                                     value={formData["STI102X070"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1606,7 +1566,6 @@ function Form() {
                                                                     value={formData["STI102X071"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1640,7 +1599,6 @@ function Form() {
                                                                     value={formData["STI102X072"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1672,7 +1630,6 @@ function Form() {
                                                                     value={formData["STI102X073"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1707,7 +1664,6 @@ function Form() {
                                                                     value={formData["STI102X074"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1739,7 +1695,6 @@ function Form() {
                                                                     value={formData["STI102X075"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1773,7 +1728,6 @@ function Form() {
                                                                     value={formData["STI102X076"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1794,25 +1748,48 @@ function Form() {
                                                                         077
                                                                     </span>
                                                                 </div>
-                                                                <select
+                                                                {/* <select
                                                                     id="sTI102_4X077"
                                                                     className="form-control"
                                                                     data-val="true"
                                                                     data-val-required="The STI102X077 field is required."
                                                                     name="STI102X077"
                                                                     value={formData["STI102X077"]}
-                                                                >onC
-                                                                    hange={handleChange}
-
+                                                                    onChange={handleChange}
+                                                                >
                                                                     <option value={0} selected="selected">
                                                                         0%
                                                                     </option>
                                                                     <option value={-1}>Смешанная</option>
                                                                     <option value={5}>5%</option>
-                                                                    <option value={10} selected="">
+                                                                    <option value={10}>
                                                                         10%
                                                                     </option>
-                                                                </select>
+                                                                </select> */}
+                                                                <FormControl fullWidth>
+
+                                                                    <Select
+                                                                        name="STI102X077"
+                                                                        value={formData["STI102X077"]}
+                                                                        label="Компания"
+                                                                        onChange={handleChange}
+                                                                    >
+                                                                        <MenuItem value={0} selected={true}>
+                                                                            0%
+                                                                        </MenuItem>
+                                                                        <MenuItem value={-1}>
+                                                                            Смешанная
+                                                                        </MenuItem>
+                                                                        <MenuItem value={5}>
+                                                                            5%
+                                                                        </MenuItem>
+                                                                        <MenuItem value={10}>
+                                                                            10%
+                                                                        </MenuItem>
+
+
+                                                                    </Select>
+                                                                </FormControl>
                                                             </div>
                                                             <span
                                                                 className="text-danger field-validation-valid"
@@ -1843,7 +1820,6 @@ function Form() {
                                                                     value={formData["STI102X078"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1875,7 +1851,6 @@ function Form() {
                                                                     value={formData["STI102X079"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1908,7 +1883,6 @@ function Form() {
                                                                     value={formData["STI102X080"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1938,7 +1912,6 @@ function Form() {
                                                                     value={formData["STI102X081"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -1971,7 +1944,6 @@ function Form() {
                                                                     value={formData["STI102X082"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -2004,7 +1976,6 @@ function Form() {
                                                                     value={formData["STI102X083"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -2037,7 +2008,6 @@ function Form() {
                                                                     value={formData["STI102X084"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -2073,7 +2043,6 @@ function Form() {
                                                                     value={formData["STI102X085"]}
 
                                                                     onChange={handleChange}
-                                                                    defaultValue={0}
                                                                 />
                                                             </div>
                                                             <span
@@ -2094,32 +2063,32 @@ function Form() {
                                                         <div className="row col-md-12 pl-0  pt-4">
                                                             <MDBox sx={{ display: 'flex' }}>
                                                                 <FormGroup>
-                                                                    <FormControlLabel
+                                                                    {/* <FormControlLabel
                                                                         name="STI101X1"
                                                                         checked={formData.STI101X1}
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
-                                                                        label="Приложение 1 (FORM STI -102-001)" />
-                                                                    <FormControlLabel
+                                                                        label="Приложение 1 (FORM STI -102-001)" /> */}
+                                                                    {/* <FormControlLabel
                                                                         name="STI101X2"
                                                                         checked={formData.STI101X2}
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
-                                                                        label="Приложение 2 (FORM STI -102-002)" />
-                                                                    <FormControlLabel
+                                                                        label="Приложение 2 (FORM STI -102-002)" /> */}
+                                                                    {/* <FormControlLabel
                                                                         name="STI101X3"
                                                                         checked={formData.STI101X3}
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
-                                                                        label="Приложение 3 (FORM STI -102-003)" />
-                                                                    <FormControlLabel
+                                                                        label="Приложение 3 (FORM STI -102-003)" /> */}
+                                                                    {/* <FormControlLabel
                                                                         name="STI101X4"
                                                                         checked={formData["STI101X4"]}
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
-                                                                        label="Приложение 4 (FORM STI -102-004)" />
+                                                                        label="Приложение 4 (FORM STI -102-004)" /> */}
                                                                 </FormGroup>
-                                                                <FormGroup>
+                                                                {/* <FormGroup>
                                                                     <FormControlLabel
                                                                         name="STI101X5"
                                                                         checked={formData["STI101X5"]}
@@ -2144,7 +2113,7 @@ function Form() {
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
                                                                         label=" Приложение 8 (FORM STI -102-008)" />
-                                                                </FormGroup>
+                                                                </FormGroup> */}
                                                             </MDBox>
 
 
@@ -2188,7 +2157,7 @@ function Form() {
                                                                                 value={formData["STI102X150"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2221,7 +2190,7 @@ function Form() {
                                                                                 value={formData["STI102X151"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2255,7 +2224,7 @@ function Form() {
                                                                                 value={formData["STI102X152"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2288,7 +2257,7 @@ function Form() {
                                                                                 value={formData["STI102X153"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2321,7 +2290,7 @@ function Form() {
                                                                                 value={formData["STI102X154"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2351,7 +2320,7 @@ function Form() {
                                                                                 value={formData["STI102X155"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2384,7 +2353,7 @@ function Form() {
                                                                                 value={formData["STI102X156"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2414,7 +2383,7 @@ function Form() {
                                                                                 value={formData["STI102X157"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2444,7 +2413,7 @@ function Form() {
                                                                                 value={formData["STI102X158"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2477,7 +2446,7 @@ function Form() {
                                                                                 value={formData["STI102X159"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2510,7 +2479,7 @@ function Form() {
                                                                                 value={formData["STI102X160"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2543,7 +2512,7 @@ function Form() {
                                                                                 value={formData["STI102X161"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2573,7 +2542,7 @@ function Form() {
                                                                                 value={formData["STI102X162"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2606,7 +2575,7 @@ function Form() {
                                                                                 value={formData["STI102X163"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2638,7 +2607,7 @@ function Form() {
                                                                                 value={formData["STI102X164"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2671,7 +2640,7 @@ function Form() {
                                                                                 value={formData["STI102X165"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2704,7 +2673,7 @@ function Form() {
                                                                                 value={formData["STI102X166"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2737,7 +2706,7 @@ function Form() {
                                                                                 value={formData["STI102X167"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2769,7 +2738,7 @@ function Form() {
                                                                                 value={formData["STI102X178"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2802,7 +2771,7 @@ function Form() {
                                                                                 value={formData["STI102X179"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2843,7 +2812,7 @@ function Form() {
                                                                                 value={formData["STI102X180"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2879,7 +2848,7 @@ function Form() {
                                                                                 value={formData["STI102X181"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2912,7 +2881,7 @@ function Form() {
                                                                                 value={formData["STI102X182"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2947,7 +2916,7 @@ function Form() {
                                                                                 value={formData["STI102X183"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -2979,7 +2948,7 @@ function Form() {
                                                                                 value={formData["STI102X198"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3011,7 +2980,7 @@ function Form() {
                                                                                 value={formData["STI102X199"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3062,7 +3031,7 @@ function Form() {
                                                                                 value={formData["STI102X200"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3094,7 +3063,7 @@ function Form() {
                                                                                 value={formData["STI102X201"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3127,7 +3096,7 @@ function Form() {
                                                                                 value={formData["STI102X202"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3157,7 +3126,7 @@ function Form() {
                                                                                 value={formData["STI102X203"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3187,7 +3156,7 @@ function Form() {
                                                                                 value={formData["STI102X204"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3219,7 +3188,7 @@ function Form() {
                                                                                 value={formData["STI102X205"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3251,7 +3220,7 @@ function Form() {
                                                                                 value={formData["STI102X206"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3283,7 +3252,7 @@ function Form() {
                                                                                 value={formData["STI102X207"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3315,7 +3284,7 @@ function Form() {
                                                                                 value={formData["STI102X208"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3347,7 +3316,7 @@ function Form() {
                                                                                 value={formData["STI102X209"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3380,7 +3349,7 @@ function Form() {
                                                                                 value={formData["STI102X210"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3410,7 +3379,7 @@ function Form() {
                                                                                 value={formData["STI102X218"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3443,7 +3412,7 @@ function Form() {
                                                                                 value={formData["STI102X219"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3487,7 +3456,7 @@ function Form() {
                                                                                 value={formData["STI102X220"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3519,7 +3488,7 @@ function Form() {
                                                                                 value={formData["STI102X221"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3557,7 +3526,7 @@ function Form() {
                                                                                 value={formData["STI102X222"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3591,7 +3560,7 @@ function Form() {
                                                                                 value={formData["STI102X223"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3623,7 +3592,7 @@ function Form() {
                                                                                 value={formData["STI102X229"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3657,7 +3626,7 @@ function Form() {
                                                                                 value={formData["STI102X230"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3702,7 +3671,7 @@ function Form() {
                                                                                 value={formData["STI102X300"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3734,7 +3703,7 @@ function Form() {
                                                                                 value={formData["STI102X301"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3766,7 +3735,7 @@ function Form() {
                                                                                 value={formData["STI102X302"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3798,7 +3767,7 @@ function Form() {
                                                                                 value={formData["STI102X303"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3830,7 +3799,7 @@ function Form() {
                                                                                 value={formData["STI102X304"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3862,7 +3831,7 @@ function Form() {
                                                                                 value={formData["STI102X305"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3895,7 +3864,7 @@ function Form() {
                                                                                 value={formData["STI102X306"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3925,7 +3894,7 @@ function Form() {
                                                                                 value={formData["STI102X307"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3957,7 +3926,7 @@ function Form() {
                                                                                 value={formData["STI102X308"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -3989,7 +3958,7 @@ function Form() {
                                                                                 value={formData["STI102X309"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4021,7 +3990,7 @@ function Form() {
                                                                                 value={formData["STI102X310"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4056,7 +4025,7 @@ function Form() {
                                                                                 value={formData["STI102X311"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4086,7 +4055,7 @@ function Form() {
                                                                                 value={formData["STI102X312"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4118,7 +4087,7 @@ function Form() {
                                                                                 value={formData["STI102X313"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4154,7 +4123,7 @@ function Form() {
                                                                                 value={formData["STI102X314"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4184,7 +4153,7 @@ function Form() {
                                                                                 value={formData["STI102X315"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4216,7 +4185,7 @@ function Form() {
                                                                                 value={formData["STI102X316"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4252,7 +4221,7 @@ function Form() {
                                                                                 value={formData["STI102X317"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4284,7 +4253,7 @@ function Form() {
                                                                                 value={formData["STI102X318"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4316,7 +4285,7 @@ function Form() {
                                                                                 value={formData["STI102X319"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4346,7 +4315,7 @@ function Form() {
                                                                                 value={formData["STI102X320"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4376,7 +4345,7 @@ function Form() {
                                                                                 value={formData["STI102X321"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4408,7 +4377,7 @@ function Form() {
                                                                                 value={formData["STI102X322"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4441,7 +4410,7 @@ function Form() {
                                                                                 value={formData["STI102X323"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4494,7 +4463,7 @@ function Form() {
                                                                                 value={formData["STI102X400"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                     </div>
@@ -4524,7 +4493,7 @@ function Form() {
                                                                                 value={formData["STI102X4010"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4554,7 +4523,7 @@ function Form() {
                                                                                 value={formData["STI102X401"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4585,7 +4554,7 @@ function Form() {
                                                                                 value={formData["STI102X4020"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4615,7 +4584,7 @@ function Form() {
                                                                                 value={formData["STI102X402"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4646,7 +4615,7 @@ function Form() {
                                                                                 value={formData["STI102X4030"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4674,7 +4643,7 @@ function Form() {
                                                                                 value={formData["STI102X403"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4707,7 +4676,7 @@ function Form() {
                                                                                 value={formData["STI102X4040"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4735,7 +4704,7 @@ function Form() {
                                                                                 value={formData["STI102X404"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4766,7 +4735,7 @@ function Form() {
                                                                                 value={formData["STI102X4050"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4794,7 +4763,7 @@ function Form() {
                                                                                 value={formData["STI102X405"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4827,7 +4796,7 @@ function Form() {
                                                                                 value={formData["STI102X406"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4860,7 +4829,7 @@ function Form() {
                                                                                 value={formData["STI102X407"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4896,7 +4865,7 @@ function Form() {
                                                                                 value={formData["STI102X408"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4928,7 +4897,7 @@ function Form() {
                                                                                 value={formData["STI102X409"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -4960,7 +4929,7 @@ function Form() {
                                                                                 value={formData["STI102X410"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5005,7 +4974,7 @@ function Form() {
                                                                                 value={formData["STI102X411"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5038,7 +5007,7 @@ function Form() {
                                                                                 value={formData["STI102X412"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5110,7 +5079,7 @@ function Form() {
                                                                                 value={formData["STI102X413"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5157,7 +5126,7 @@ function Form() {
                                                                                 value={formData["STI102X500"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5189,7 +5158,7 @@ function Form() {
                                                                                 value={formData["STI102X501"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5222,7 +5191,7 @@ function Form() {
                                                                                 value={formData["STI102X502"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5254,7 +5223,7 @@ function Form() {
                                                                                 value={formData["STI102X503"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5284,7 +5253,7 @@ function Form() {
                                                                                 value={formData["STI102X504"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5317,7 +5286,7 @@ function Form() {
                                                                                 value={formData["STI102X505"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5352,7 +5321,7 @@ function Form() {
                                                                                 value={formData["STI102X506"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5382,7 +5351,7 @@ function Form() {
                                                                                 value={formData["STI102X507"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5416,7 +5385,7 @@ function Form() {
                                                                                 value={formData["STI102X508"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5449,7 +5418,7 @@ function Form() {
                                                                                 value={formData["STI102X509"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5481,7 +5450,7 @@ function Form() {
                                                                                 value={formData["STI102X510"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5513,7 +5482,7 @@ function Form() {
                                                                                 value={formData["STI102X511"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5546,7 +5515,7 @@ function Form() {
                                                                                 value={formData["STI102X512"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5578,7 +5547,7 @@ function Form() {
                                                                                 value={formData["STI102X548"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5613,7 +5582,7 @@ function Form() {
                                                                                 value={formData["STI102X549"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5651,7 +5620,7 @@ function Form() {
                                                                                 value={formData["STI102X550"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5684,7 +5653,7 @@ function Form() {
                                                                                 value={formData["STI102X551"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5719,7 +5688,7 @@ function Form() {
                                                                                 value={formData["STI102X552"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5755,7 +5724,7 @@ function Form() {
                                                                                 value={formData["STI102X553"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5790,7 +5759,7 @@ function Form() {
                                                                                 value={formData["STI102X554"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5827,7 +5796,7 @@ function Form() {
                                                                                 value={formData["STI102X555"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5857,7 +5826,7 @@ function Form() {
                                                                                 value={formData["STI102X556"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5895,7 +5864,7 @@ function Form() {
                                                                                 value={formData["STI102X557"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5928,7 +5897,7 @@ function Form() {
                                                                                 value={formData["STI102X558"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5961,7 +5930,7 @@ function Form() {
                                                                                 value={formData["STI102X559"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -5994,7 +5963,7 @@ function Form() {
                                                                                 value={formData["STI102X560"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -6029,7 +5998,7 @@ function Form() {
                                                                                 value={formData["STI102X561"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -6065,7 +6034,7 @@ function Form() {
                                                                                 value={formData["STI102X562"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -6098,7 +6067,7 @@ function Form() {
                                                                                 value={formData["STI102X563"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -6133,7 +6102,7 @@ function Form() {
                                                                                 value={formData["STI102X564"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -6166,7 +6135,7 @@ function Form() {
                                                                                 value={formData["STI102X565"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -6199,7 +6168,7 @@ function Form() {
                                                                                 value={formData["STI102X566"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -6233,7 +6202,7 @@ function Form() {
                                                                                 value={formData["STI102X567"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -6265,7 +6234,7 @@ function Form() {
                                                                                 value={formData["STI102X598"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -6298,7 +6267,7 @@ function Form() {
                                                                                 value={formData["STI102X599"]}
 
                                                                                 onChange={handleChange}
-                                                                                defaultValue={0}
+
                                                                             />
                                                                         </div>
                                                                         <span
@@ -6347,7 +6316,7 @@ function Form() {
                                                                                         value={formData["STI102X600"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6380,7 +6349,7 @@ function Form() {
                                                                                         value={formData["STI102X601"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6414,7 +6383,7 @@ function Form() {
                                                                                         value={formData["STI102X602"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6447,7 +6416,7 @@ function Form() {
                                                                                         value={formData["STI102X603"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6479,7 +6448,7 @@ function Form() {
                                                                                         value={formData["STI102X604"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6516,7 +6485,7 @@ function Form() {
                                                                                         value={formData["STI102X605"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6549,7 +6518,7 @@ function Form() {
                                                                                         value={formData["STI102X606"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6581,7 +6550,7 @@ function Form() {
                                                                                         value={formData["STI102X607"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6613,7 +6582,7 @@ function Form() {
                                                                                         value={formData["STI102X608"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6645,7 +6614,7 @@ function Form() {
                                                                                         value={formData["STI102X609"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6681,7 +6650,7 @@ function Form() {
                                                                                         value={formData["STI102X610"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6715,7 +6684,7 @@ function Form() {
                                                                                         value={formData["STI102X611"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6747,7 +6716,7 @@ function Form() {
                                                                                         value={formData["STI102X612"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6779,7 +6748,7 @@ function Form() {
                                                                                         value={formData["STI102X613"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6811,7 +6780,7 @@ function Form() {
                                                                                         value={formData["STI102X614"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6843,7 +6812,7 @@ function Form() {
                                                                                         value={formData["STI102X615"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6876,9 +6845,8 @@ function Form() {
                                                                                         data-val-required="The STI102X616 field is required."
                                                                                         name="STI102X616"
                                                                                         value={formData["STI102X616"]}
-
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={230000.0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6911,7 +6879,7 @@ function Form() {
                                                                                         value={formData["STI102X617"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6943,7 +6911,7 @@ function Form() {
                                                                                         value={formData["STI102X618"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -6975,7 +6943,7 @@ function Form() {
                                                                                         value={formData["STI102X619"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7007,7 +6975,7 @@ function Form() {
                                                                                         value={formData["STI102X620"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7040,7 +7008,7 @@ function Form() {
                                                                                         value={formData["STI102X621"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7145,7 +7113,7 @@ function Form() {
                                                                                         value={formData["STI102X715"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7238,7 +7206,7 @@ function Form() {
                                                                                         value={formData["STI102X725"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                             </div>
@@ -7327,7 +7295,7 @@ function Form() {
                                                                                         value={formData["STI102X735"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                             </div>
@@ -7415,7 +7383,7 @@ function Form() {
                                                                                         value={formData["STI102X745"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                             </div>
@@ -7501,7 +7469,7 @@ function Form() {
                                                                                         value={formData["STI102X755"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                             </div>
@@ -7589,7 +7557,7 @@ function Form() {
                                                                                         value={formData["STI102X765"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                             </div>
@@ -7616,7 +7584,7 @@ function Form() {
                                                                                         value={formData["STI102X775"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                             </div>
@@ -7662,7 +7630,7 @@ function Form() {
                                                                                         value={formData["STI102X750"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7696,7 +7664,7 @@ function Form() {
                                                                                         value={formData["STI102X751"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7729,7 +7697,7 @@ function Form() {
                                                                                         value={formData["STI102X752"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7762,7 +7730,7 @@ function Form() {
                                                                                         value={formData["STI102X753"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7792,7 +7760,7 @@ function Form() {
                                                                                         value={formData["STI102X758"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7824,7 +7792,7 @@ function Form() {
                                                                                         value={formData["STI102X759"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7864,7 +7832,7 @@ function Form() {
                                                                                         value={formData["STI102X760"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7897,7 +7865,7 @@ function Form() {
                                                                                         value={formData["STI102X761"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7929,7 +7897,7 @@ function Form() {
                                                                                         value={formData["STI102X762"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7962,7 +7930,7 @@ function Form() {
                                                                                         value={formData["STI102X763"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -7995,7 +7963,7 @@ function Form() {
                                                                                         value={formData["STI102X764"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8028,7 +7996,7 @@ function Form() {
                                                                                         value={formData["STI102X768"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8061,7 +8029,7 @@ function Form() {
                                                                                         value={formData["STI102X769"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8098,7 +8066,7 @@ function Form() {
                                                                                         value={formData["STI102X770"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8128,7 +8096,7 @@ function Form() {
                                                                                         value={formData["STI102X771"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8158,7 +8126,7 @@ function Form() {
                                                                                         value={formData["STI102X772"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8190,7 +8158,7 @@ function Form() {
                                                                                         value={formData["STI102X773"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8222,7 +8190,7 @@ function Form() {
                                                                                         value={formData["STI102X774"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8252,7 +8220,7 @@ function Form() {
                                                                                         value={formData["STI102X775"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8284,7 +8252,7 @@ function Form() {
                                                                                         value={formData["STI102X776"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8316,7 +8284,7 @@ function Form() {
                                                                                         value={formData["STI102X790"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8349,7 +8317,7 @@ function Form() {
                                                                                         value={formData["STI102X791"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8382,7 +8350,7 @@ function Form() {
                                                                                         value={formData["STI102X792"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8414,7 +8382,7 @@ function Form() {
                                                                                         value={formData["STI102X798"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
@@ -8447,7 +8415,7 @@ function Form() {
                                                                                         value={formData["STI102X799"]}
 
                                                                                         onChange={handleChange}
-                                                                                        defaultValue={0}
+
                                                                                     />
                                                                                 </div>
                                                                                 <span
