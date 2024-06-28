@@ -1,4 +1,10 @@
 {
+    "navbar": {
+        "home": "Главная",
+        "services": "Сервисы",
+        "tax_calculation":"Расчет налога"
+    },
+    
     "carousel": {
         "carousel_1": {
             "header": ""

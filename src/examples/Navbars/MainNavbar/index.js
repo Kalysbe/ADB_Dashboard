@@ -171,27 +171,25 @@ function DefaultNavbar({ transparent, light, action }) {
                                 </div>
                               </div>
 
-                             
+
 
                               <FormControl >
 
-  <Select
-    labelId="demo-simple-select-label"
-    id="demo-simple-select"
+                                <Select
+                                  labelId="demo-simple-select-label"
+                                  id="demo-simple-select"
 
-    onChange={changeLanguage} 
-    value={i18n.language}
-  >
-    <MenuItem value="en" sx={{display:'flex',backgroundColor:'#fff'}}>
-     
-          English
-        </MenuItem>
-        <MenuItem value="ru">
-      
-          Русский
-        </MenuItem>
-  </Select>
-</FormControl>
+                                  onChange={changeLanguage}
+                                  value={i18n.language}
+                                >
+                                  <MenuItem value="en" sx={{ display: 'flex', backgroundColor: '#fff' }}>
+                                    English
+                                  </MenuItem>
+                                  <MenuItem value="ru">
+                                    Русский
+                                  </MenuItem>
+                                </Select>
+                              </FormControl>
                             </div>
                           </Container>
                         </section>
@@ -231,10 +229,10 @@ function DefaultNavbar({ transparent, light, action }) {
                                         <nav className="main-menu menu-style1 d-none d-lg-block">
                                           <ul id="menu-primary-menu">
                                             <li id="menu-item-101" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-101">
-                                              <Link to='/'>Главная</Link>
+                                              <Link to='/'>{t('navbar.home')}</Link>
                                             </li>
                                             <li id="menu-item-105" className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-105">
-                                              <a href="#">Сервисы</a>
+                                              <a href="#">{t('navbar.services')}</a>
                                               <ul className="sub-menu">
                                                 <li id="menu-item-96" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-96">
                                                   <a>Расчет налога</a>
@@ -257,9 +255,7 @@ function DefaultNavbar({ transparent, light, action }) {
                                               </li> */}
                                                   </ul>
                                                 </li>
-                                                <li id="menu-item-90" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-90">
-                                                  <a>Заполнению декларации</a>
-                                                </li>
+                                               
                                               </ul>
                                             </li>
 
@@ -301,13 +297,13 @@ function DefaultNavbar({ transparent, light, action }) {
                                               <MDButton variant="contained" color="info"
                                                 component={NavLink}
                                                 to="/dashboard">
-                                               Кабинет
+                                                Кабинет
                                               </MDButton>
                                             </>
                                           ) : (
                                             <>
                                               <Link to='/authentication/sign-in' className="vs-btn">Войти<i className="far fa-arrow-right" /></Link>
-                                          
+
                                             </>
                                           )}
                                         </div>{/* End Button */}
