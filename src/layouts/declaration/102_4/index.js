@@ -92,7 +92,7 @@ function Form() {
         STI101X1: false,
         "STI101X2": false,
         "STI101X3": false,
-        "STI101X4": '',
+        "STI101X4": false,
         "STI101X4_2": false,
         "STI101X5": false,
         "STI101X6": false,
@@ -311,10 +311,13 @@ function Form() {
 
     useEffect(() => {
 
+//STI102X306
+
 
         if (clientData.finance) {
+            let totalCostSum = 0
             if (clientData.finance[formData.taxable_period]) {
-                const totalCostSum = Object.values(clientData.finance[formData.taxable_period]).reduce((accumulator, currentValue) => {
+                 totalCostSum = Object.values(clientData.finance[formData.taxable_period]).reduce((accumulator, currentValue) => {
                     return accumulator + currentValue.total;
                 }, 0);
             }
@@ -322,6 +325,8 @@ function Form() {
             setFormData((prevFormData) => ({
                 ...prevFormData,
                 ['STI102X057']: clientData.tax,
+                ['STI102X306']: totalCostSum,
+                ['STI101X3']: true
             }));
 
 
@@ -384,7 +389,7 @@ function Form() {
                                         </MDTypography>
                                         <Grid container spacing={2}>
                                             <Grid sm={12} md={6} item>
-                                                {/* <FormControl fullWidth>
+                                                <FormControl fullWidth>
                                                     <InputLabel id="demo-simple-select-label">{"Компания"}</InputLabel>
                                                     <Select
                                                         name="company"
@@ -393,7 +398,7 @@ function Form() {
                                                         onChange={handleChange}
                                                     >
                                                         <MenuItem value='0' selected={true}>
-                                                            Выберите налоговый период
+                                                            Выберите компанию
                                                         </MenuItem>
                                                         {clients.items.map((opt, index) => (
                                                             <MenuItem key={index} value={opt._id}>
@@ -402,10 +407,10 @@ function Form() {
                                                         ))}
 
                                                     </Select>
-                                                </FormControl> */}
+                                                </FormControl>
                                             </Grid>
                                             <Grid sm={12} md={6} item>
-                                                {/* <FormControl fullWidth>
+                                                <FormControl fullWidth>
                                                     <InputLabel id="demo-simple-select-label">Налоговый период</InputLabel>
                                                     <Select
                                                         name="taxable_period"
@@ -424,7 +429,7 @@ function Form() {
 
 
                                                     </Select>
-                                                </FormControl> */}
+                                                </FormControl>
                                             </Grid>
                                         </Grid>
                                     </MDBox>
@@ -1766,7 +1771,7 @@ function Form() {
                                                                         10%
                                                                     </option>
                                                                 </select> */}
-                                                                <FormControl fullWidth>
+                                                                <FormControl sx={{width:'100px'}}>
 
                                                                     <Select
                                                                         name="STI102X077"
@@ -2063,32 +2068,32 @@ function Form() {
                                                         <div className="row col-md-12 pl-0  pt-4">
                                                             <MDBox sx={{ display: 'flex' }}>
                                                                 <FormGroup>
-                                                                    {/* <FormControlLabel
+                                                                    <FormControlLabel
                                                                         name="STI101X1"
                                                                         checked={formData.STI101X1}
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
-                                                                        label="Приложение 1 (FORM STI -102-001)" /> */}
-                                                                    {/* <FormControlLabel
+                                                                        label="Приложение 1 (FORM STI -102-001)" />
+                                                                    <FormControlLabel
                                                                         name="STI101X2"
                                                                         checked={formData.STI101X2}
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
-                                                                        label="Приложение 2 (FORM STI -102-002)" /> */}
-                                                                    {/* <FormControlLabel
+                                                                        label="Приложение 2 (FORM STI -102-002)" />
+                                                                    <FormControlLabel
                                                                         name="STI101X3"
                                                                         checked={formData.STI101X3}
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
-                                                                        label="Приложение 3 (FORM STI -102-003)" /> */}
-                                                                    {/* <FormControlLabel
+                                                                        label="Приложение 3 (FORM STI -102-003)" />
+                                                                    <FormControlLabel
                                                                         name="STI101X4"
                                                                         checked={formData["STI101X4"]}
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
-                                                                        label="Приложение 4 (FORM STI -102-004)" /> */}
+                                                                        label="Приложение 4 (FORM STI -102-004)" />
                                                                 </FormGroup>
-                                                                {/* <FormGroup>
+                                                                <FormGroup>
                                                                     <FormControlLabel
                                                                         name="STI101X5"
                                                                         checked={formData["STI101X5"]}
@@ -2113,7 +2118,7 @@ function Form() {
                                                                         onChange={handleChange}
                                                                         control={<Checkbox />}
                                                                         label=" Приложение 8 (FORM STI -102-008)" />
-                                                                </FormGroup> */}
+                                                                </FormGroup>
                                                             </MDBox>
 
 
