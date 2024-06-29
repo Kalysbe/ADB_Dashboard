@@ -123,8 +123,8 @@ function DefaultNavbar({ transparent, light, action }) {
                                           <div className="header-links style-white">
                                             <ul>
                                               <li className="d-none d-xxl-inline-block">
-                                                <i className="fal fa-map-marker-alt" />Раззакова
-                                                32, Бишкек
+                                                <i className="fal fa-map-marker-alt" />
+                                                Раззакова 32, Бишкек
                                               </li>
                                               <li><i className="far fa-clock" />Пн
                                                 – Пт: 9:00 – 18:00</li>
@@ -178,15 +178,15 @@ function DefaultNavbar({ transparent, light, action }) {
                                 <Select
                                   labelId="demo-simple-select-label"
                                   id="demo-simple-select"
-
+                                  style={{background:'#fff'}}
                                   onChange={changeLanguage}
                                   value={i18n.language}
                                 >
                                   <MenuItem value="en" sx={{ display: 'flex', backgroundColor: '#fff' }}>
-                                    English
+                                    EN
                                   </MenuItem>
                                   <MenuItem value="ru">
-                                    Русский
+                                    RU
                                   </MenuItem>
                                 </Select>
                               </FormControl>
@@ -235,19 +235,19 @@ function DefaultNavbar({ transparent, light, action }) {
                                               <a href="#">{t('navbar.services')}</a>
                                               <ul className="sub-menu">
                                                 <li id="menu-item-96" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-96">
-                                                  <a>Расчет налога</a>
+                                                  <a>{t('navbar.tax_calculation')}</a>
                                                   <ul className="sub-menu">
                                                     <li id="menu-item-102" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-102">
-                                                      <Link to="/taxhome">Жилое здание, сооружение и помещение</Link>
+                                                      <Link to="/taxhome">{t('navbar.home_tax')}</Link>
                                                     </li>
                                                     <li id="menu-item-102" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-102">
-                                                      <Link to="/taxnohome">Нежилое здание, сооружение и помещение</Link>
+                                                      <Link to="/taxnohome">{t('navbar.nohome_tax')}</Link>
                                                     </li>
                                                     <li id="menu-item-102" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-102">
-                                                      <Link to="/taxplace">Земли насел. пунктов и несельхоз назнач.</Link>
+                                                      <Link to="/taxplace">{t('navbar.place_tax')}</Link>
                                                     </li>
                                                     <li id="menu-item-102" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-102">
-                                                      <Link to="/taxcar">Транспортное средство</Link>
+                                                      <Link to="/taxcar">{t('navbar.car_tax')}</Link>
                                                     </li>
                                                     {/* <li id="menu-item-95" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-95">
                                                 <a>Service
@@ -260,10 +260,10 @@ function DefaultNavbar({ transparent, light, action }) {
                                             </li>
 
                                             <li id="menu-item-94" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-94">
-                                              <Link to='/blog'>Новости</Link>
+                                              <Link to='/blog'>{t('navbar.news')}</Link>
                                             </li>
                                             <li id="menu-item-88" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-88">
-                                              <Link to='/contacts'>Контакты</Link>
+                                              <Link to='/contacts'>{t('navbar.contact')}</Link>
                                             </li>
                                           </ul>
                                         </nav>

@@ -53,7 +53,7 @@ function Basic (props) {
                   viewsCount={obj.viewsCount}
                   commentsCount={3}
                   tags={obj.tags}
-                  isEditable={userData?._id == obj.user._id}
+                  // isEditable={userData?._id == obj.user._id}
                   first={index == 0 ? true : false}
                 />
               </Grid>

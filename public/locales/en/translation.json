@@ -1,5 +1,14 @@
 {
-    "welcome": "Welcome to React and react-i18next",
-    "description": "This is a simple example of a multi-language application."
-  }
+  "navbar": {
+      "home": "Home",
+      "services": "Сервисы",
+      "tax_calculation":"Расчет налога"
+  },
   
+  "carousel": {
+      "carousel_1": {
+          "header": ""
+      }
+  } ,
+  "description": "Это простой пример многоязычного приложения."
+}
