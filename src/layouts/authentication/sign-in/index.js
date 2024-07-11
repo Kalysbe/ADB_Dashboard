@@ -48,9 +48,9 @@ import { fetchAuth,  } from "../../../redux/actions/auth";
 import { selectIsAuth } from "../../../redux/slices/auth";
 
 function Basic() {
-  let isAuth = false
+
   const navigate = useNavigate();
-  isAuth = useSelector(selectIsAuth)
+  const isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch()
   const {
     register,
@@ -74,14 +74,12 @@ function Basic() {
       alert('Не удалось авторизоваться')
     }
   }
-  console.log(isAuth)
-  useEffect(() => {
 
+    console.log(isAuth)
     if (isAuth) {
-      console.log(1212)
       navigate('/dashboard');
     }
-  }, [isAuth]);
+
 
 
   return (
