@@ -33,7 +33,7 @@ function parseXML(xmlString) {
     }
 
     const documentStatusName = receipt.getElementsByTagName('documentStatusName')[0].textContent;
-    if (documentStatusName === 'Принят') {
+    if (documentStatusName !== 'Отклонен') {
     receiptArray.push({
       contractorName: receipt.getElementsByTagName('contractorName')[0].textContent,
       createdDate: receipt.getElementsByTagName('createdDate')[0].textContent,

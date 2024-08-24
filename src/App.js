@@ -192,7 +192,6 @@ export default function App() {
 }, [layout])
 
   useEffect(() => {
-
       const lastVisitedPath = localStorage.getItem('lastVisitedPath');
       if (lastVisitedPath) {
         navigate(lastVisitedPath);
