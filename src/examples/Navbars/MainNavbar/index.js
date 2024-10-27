@@ -230,6 +230,7 @@ function DefaultNavbar({ transparent, light, action }) {
                                           <ul id="menu-primary-menu">
                                             <li id="menu-item-101" className="menu-item menu-item-type-post_type menu-item-object-page menu-item-101">
                                               <Link to='/'>{t('navbar.home')}</Link>
+                                              
                                             </li>
                                             <li id="menu-item-105" className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-105">
                                               <a href="#">{t('navbar.services')}</a>
