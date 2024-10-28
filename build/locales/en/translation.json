@@ -1,0 +1,14 @@
+{
+  "navbar": {
+      "home": "Home",
+      "services": "Сервисы",
+      "tax_calculation":"Расчет налога"
+  },
+  
+  "carousel": {
+      "carousel_1": {
+          "header": ""
+      }
+  } ,
+  "description": "Это простой пример многоязычного приложения."
+}
