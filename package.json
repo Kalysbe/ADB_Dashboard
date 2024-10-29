@@ -70,5 +70,8 @@
   },
   "overrides": {
     "svgo": "3.0.2"
+  },
+  "devDependencies": {
+    "ajv": "^7.2.4"
   }
 }
