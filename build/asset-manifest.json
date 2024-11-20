@@ -1,12 +1,11 @@
 {
   "files": {
     "main.css": "/static/css/main.67081ade.css",
-    "main.js": "/static/js/main.3d86d8de.js",
+    "main.js": "/static/js/main.24d1ab1e.js",
     "static/media/fa-duotone-900.svg": "/static/media/fa-duotone-900.bac7a949fdfa983ff8a5.svg",
     "static/media/fa-light-300.svg": "/static/media/fa-light-300.676ceddb711397cb345f.svg",
     "static/media/fa-regular-400.svg": "/static/media/fa-regular-400.ef3cf368d75e16e0a1c3.svg",
     "static/media/fa-solid-900.svg": "/static/media/fa-solid-900.c4054b9e4c6b8fad2407.svg",
-    "static/media/pattern-tree.svg": "/static/media/pattern-tree.156bb943ac7fd244f10c115d085e085e.svg",
     "static/media/fa-brands-400_1.svg": "/static/media/fa-brands-400_1.4de3f482611be3bc9b93.svg",
     "static/media/fa-duotone-900.eot": "/static/media/fa-duotone-900.44bbc17621739acf4fb1.eot",
     "static/media/fa-duotone-900.ttf": "/static/media/fa-duotone-900.1bdc95a1f9dc66afe5a9.ttf",
@@ -44,6 +43,7 @@
     "static/media/feather.ttf": "/static/media/feather.37d6b8ef840db6743f44.ttf",
     "static/media/marked.cjs": "/static/media/marked.9d11e79e65a241a47955.cjs",
     "static/media/visa.png": "/static/media/visa.71c0d5e9e2aaee42e4c3.png",
+    "static/media/ab-1-2.jpg": "/static/media/ab-1-2.cba31b8324d0171a10e3.jpg",
     "static/media/mastercard.png": "/static/media/mastercard.27fca3e7637a9458fb64.png",
     "static/media/team-1.jpg": "/static/media/team-1.0fd36e0ee93dcfacdef8.jpg",
     "static/media/sr-bg-1-1.png": "/static/media/sr-bg-1-1.f0242fe8cd1b9da4b267.png",
@@ -77,10 +77,10 @@
     "static/media/close.svg": "/static/media/close.a65153dd36f204e97b12.svg",
     "static/media/getFetch.cjs": "/static/media/getFetch.c4cca45e22bc1b2c7d0d.cjs",
     "main.67081ade.css.map": "/static/css/main.67081ade.css.map",
-    "main.3d86d8de.js.map": "/static/js/main.3d86d8de.js.map"
+    "main.24d1ab1e.js.map": "/static/js/main.24d1ab1e.js.map"
   },
   "entrypoints": [
     "static/css/main.67081ade.css",
-    "static/js/main.3d86d8de.js"
+    "static/js/main.24d1ab1e.js"
   ]
 }

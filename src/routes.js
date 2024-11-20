@@ -67,6 +67,8 @@ import TaxHome from "layouts/main/Taxes/TaxHome";
 import TaxNoHome from "layouts/main/Taxes/TaxNoHome";
 import TaxPlace from "layouts/main/Taxes/TaxPlace";
 
+import Esf from "layouts/esf";
+
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -134,6 +136,16 @@ const routes = [
     icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
     route: "/declaration",
     component: <Declaration />,
+    role:[1,2]
+  },
+  {
+    type: "collapse",
+    name: "Формированные ЭСФ",
+    key: "esf",
+    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
+    route: "/declaration",
+    route: "/esf",
+    component: <Esf />,
     role:[1,2]
   },
 
@@ -286,6 +298,7 @@ const routes = [
     component: <EditClient />,
     role:[1,2]
   },
+
 ];
 
 export default routes;
