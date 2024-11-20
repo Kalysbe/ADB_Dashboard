@@ -45,6 +45,7 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 import { fetchClients, fetchDeleteClient } from '../../redux/actions/client';
+import { fetchXmls } from '../../redux/actions/xml';
 import Swal from 'sweetalert2';
 
 
@@ -63,16 +64,16 @@ function Declarations() {
   const [open, setOpen] = React.useState(false);
   const [formAct, setFormAct] = useState(actUser)
   const [userData, setUserData] = useState('')
-  const { items, status } = useSelector(state => state.client.clients);
+  const { items, status } = useSelector(state => state.xml.xmls);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
 
 
-  const ClientList = items
+  const EsfList = items
   const LoaderStatus = status
 
 
-  console.log(ClientList.length)
+
 
 
   const actAdd = 'add'
@@ -83,7 +84,7 @@ function Declarations() {
 
 
   useEffect(() => {
-    dispatch(fetchClients());
+    dispatch(fetchXmls());
   }, []);
 
 
@@ -160,7 +161,7 @@ function Declarations() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h5" color="white">
-                    Клиенты
+                    ЭСФ
                   </MDTypography>
                 </MDBox>
                 <MDBox color="text" px={2}>
@@ -180,36 +181,41 @@ function Declarations() {
               {LoaderStatus === "loading" ? (
                 <MDBox py='30px' sx={{ display: 'flex', justifyContent: 'center' }}>
                   <CircularProgress color='info' size='60px' />
-                </MDBox>) : ClientList.length ? (
+                </MDBox>) : EsfList.length ? (
                   <MDBox pt={3} mx={2} >
                     <Table>
                       <TableHead style={{ display: 'table-header-group' }}>
                         <TableRow>
-                          <TableCell>Имя</TableCell>
-                          <TableCell>Тип</TableCell>
-                          <TableCell>Действия</TableCell>
+                          <TableCell>Организация</TableCell>
+                          <TableCell>ИП адрес</TableCell>
+                          <TableCell>Дата</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {ClientList.map((item, index) => (
+                        {EsfList.map((item, index) => (
                           <TableRow key={index}>
                             <TableCell>
 
                               {/* <Link to={`/client/${item._id}`} color="info"> */}
                                 <MDTypography variant="body2" color="info" component={NavLink} to={`/client/${item._id}`} >
-                                  {item.name}
+                                  {item.company}
                                 </MDTypography>
                               {/* </Link> */}
 
                             </TableCell>
                             <TableCell>
                               <MDTypography variant="h6" color="dark">
-                                ИП
+                              {item.ip}
                               </MDTypography>
                             </TableCell>
                             <TableCell>
-                              <MDButton variant="outlined" color="error" size="small" style={{ marginLeft: '8px' }} onClick={() => onDelete(item._id)}>
-                                Удалить
+                              <MDTypography variant="h6" color="dark">
+                              {item.createdAt}
+                              </MDTypography>
+                            </TableCell>
+                            <TableCell>
+                              <MDButton variant="outlined" color="info" size="small" style={{ marginLeft: '8px' }} onClick={() => onDelete(item._id)}>
+                                  Детали
                               </MDButton>
                             </TableCell>
                           </TableRow>

@@ -4,6 +4,8 @@ import { usersReducer } from './slices/users'
 import { authReducer } from './slices/auth';
 import { declarationsReducer } from './slices/declarations';
 import { clientReducer } from './slices/client';
+import { xmlReducer } from './slices/xml';
+
 
 const store = configureStore({
     reducer: {
@@ -11,7 +13,8 @@ const store = configureStore({
         users: usersReducer,
         auth: authReducer,
         declarations:declarationsReducer,
-        client: clientReducer
+        client: clientReducer,
+        xml: xmlReducer
     }
 })
 

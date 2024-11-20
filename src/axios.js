@@ -1,7 +1,7 @@
 import axios from "axios";
 const instanse = axios.create({
   baseURL: 'https://adb-solution.com/api/'
-  // baseURL: process.env.REACT_APP_API_URL,
+  // baseURL: 'http://localhost:4444/'
 
 
 })
