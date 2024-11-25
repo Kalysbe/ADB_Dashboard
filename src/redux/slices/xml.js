@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchXmls } from "../actions/xml"
+import { fetchXmls, fetchXmlById } from "../actions/xml"
 
 
 const initialState = {
-    xmls: {
-        items: [],
-        status: "loading"
-    },
+    items: [],
+    esfDetail:{},
+    status: "loading"
 }
 
 const xmlSlice = createSlice({
@@ -16,16 +15,30 @@ const xmlSlice = createSlice({
     extraReducers: (builder) => {
       builder
         .addCase(fetchXmls.pending, (state) => {
-          state.xmls.items = [];
-          state.xmls.status = "loading";
+          state.items = [];
+          state.status = "loading";
         })
         .addCase(fetchXmls.fulfilled, (state, action) => {
-          state.xmls.items = action.payload;
-          state.xmls.status = "loaded";
+          state.items = action.payload;
+          state.status = "loaded";
         })
         .addCase(fetchXmls.rejected, (state) => {
-          state.xmls.items = [];
-          state.xmls.status = "error";
+          state.items = [];
+          state.status = "error";
+        });
+
+        builder
+        .addCase(fetchXmlById.pending, (state) => {
+          state.esfDetail = {};
+          state.status = "loading";
+        })
+        .addCase(fetchXmlById.fulfilled, (state, action) => {
+          state.esfDetail = action.payload;
+          state.status = "loaded";
+        })
+        .addCase(fetchXmlById.rejected, (state) => {
+          state.esfDetail = {};
+          state.status = "error";
         });
     },
   });

@@ -21,7 +21,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 import { CardContent, Table, TableContainer, TableHead, TableBody, TableRow, TableCell, TablePagination, TextField, Button } from '@mui/material';
-import { useLocation, NavLink ,Link} from "react-router-dom";
+import { useLocation, NavLink, Link } from "react-router-dom";
 
 
 // Material Dashboard 2 React components
@@ -44,6 +44,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
+import { format } from "date-fns";
+
 import { fetchClients, fetchDeleteClient } from '../../redux/actions/client';
 import { fetchXmls } from '../../redux/actions/xml';
 import Swal from 'sweetalert2';
@@ -64,7 +66,7 @@ function Declarations() {
   const [open, setOpen] = React.useState(false);
   const [formAct, setFormAct] = useState(actUser)
   const [userData, setUserData] = useState('')
-  const { items, status } = useSelector(state => state.xml.xmls);
+  const { items, status } = useSelector(state => state.xml);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
 
@@ -164,17 +166,10 @@ function Declarations() {
                     ЭСФ
                   </MDTypography>
                 </MDBox>
-                <MDBox color="text" px={2}>
-                  <MDButton variant="gradient" color="dark"
-                    component={NavLink}
-                    to={`/client/add`}>
-                    <Icon sx={{ fontWeight: "bold" }}>add</Icon>
-                    Новый клиент
-                  </MDButton>
-                </MDBox>
+               
               </MDBox>
               <MDBox mx={2}>
-                <MDInput label="Поиск пользователей"
+                <MDInput label="Поиск"
                   value={searchTerm}
                   onChange={handleSearchChange} fullWidth />
               </MDBox>
@@ -187,8 +182,8 @@ function Declarations() {
                       <TableHead style={{ display: 'table-header-group' }}>
                         <TableRow>
                           <TableCell>Организация</TableCell>
-                          <TableCell>ИП адрес</TableCell>
-                          <TableCell>Дата</TableCell>
+                          <TableCell>IP адрес</TableCell>
+                          <TableCell>Дата / Время</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -197,25 +192,28 @@ function Declarations() {
                             <TableCell>
 
                               {/* <Link to={`/client/${item._id}`} color="info"> */}
-                                <MDTypography variant="body2" color="info" component={NavLink} to={`/client/${item._id}`} >
-                                  {item.company}
-                                </MDTypography>
+                              <MDTypography variant="h5"  >
+                                {item.company}
+                              </MDTypography>
                               {/* </Link> */}
 
                             </TableCell>
                             <TableCell>
                               <MDTypography variant="h6" color="dark">
-                              {item.ip}
+                                {item.ip}
                               </MDTypography>
                             </TableCell>
                             <TableCell>
                               <MDTypography variant="h6" color="dark">
-                              {item.createdAt}
+                                {/* Форматируем дату */}
+                                {item.createdAt
+                                  ? format(new Date(item.createdAt), "dd.MM.yyyy HH:mm:ss")
+                                  : "Нет даты"}
                               </MDTypography>
                             </TableCell>
                             <TableCell>
-                              <MDButton variant="outlined" color="info" size="small" style={{ marginLeft: '8px' }} onClick={() => onDelete(item._id)}>
-                                  Детали
+                              <MDButton variant="outlined" color="info" size="small" style={{ marginLeft: '8px' }} component={NavLink} to={`/esf/${item._id}`} >
+                                Детали
                               </MDButton>
                             </TableCell>
                           </TableRow>

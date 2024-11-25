@@ -68,6 +68,7 @@ import TaxNoHome from "layouts/main/Taxes/TaxNoHome";
 import TaxPlace from "layouts/main/Taxes/TaxPlace";
 
 import Esf from "layouts/esf";
+import EsfDetail from "layouts/esf/detail";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -140,13 +141,22 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Формированные ЭСФ",
+    name: "ЭСФ",
     key: "esf",
     icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-    route: "/declaration",
     route: "/esf",
     component: <Esf />,
     role:[1,2]
+  },
+
+  {
+ 
+    name: "ЭСФ",
+    key: "esf-detail",
+    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
+    route: "/esf/:id",
+    component: <EsfDetail />,
+    role:[1]
   },
 
 

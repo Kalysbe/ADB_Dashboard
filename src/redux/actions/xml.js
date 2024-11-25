@@ -6,5 +6,10 @@ export const fetchXmls = createAsyncThunk("xml/fetchXmls", async () => {
     return data;
 })
 
+export const fetchXmlById = createAsyncThunk("xml/fetchXmlById", async (id) => {
+    const { data } = await axios.get(`/xml/${id}`);
+    return data;
+})
+
 
 
